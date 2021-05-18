@@ -14,5 +14,8 @@ class PipelineProvider(Plugin):
     def create_pipeline(self):
         pass
 
+    def update_pipeline(self):
+        pass
+
     def delete_pipeline(self):
         pass
