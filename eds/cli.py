@@ -1,4 +1,4 @@
-from eds import main
+from eds.main import main
 
 
 def cli():
