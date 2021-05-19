@@ -3,6 +3,8 @@ from eds.interfaces.plugin import Plugin
 
 class PipelineProvider(Plugin):
 
+    interface_name = "eds.pipeline_provider"
+
     schema = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "eds.pipeline_provider",

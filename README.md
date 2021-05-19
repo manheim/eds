@@ -62,6 +62,7 @@ plugins:
       pip_requirement:
       inheritance:
       properties:
+
 ```
 
 * `version`: (required) The version of EDS to use.
@@ -76,32 +77,25 @@ plugins:
     * `inheritance`: (optional) A list of plugin configuration ids to inherit
       from.  Precedence is such that properties from later items override
       earlier ones.
-    * `properties`: The properties of the plugin configuration.
+    * `properties`: (optional) properties dictionary.
+
 
 ## Built-in Plugins
 
-* [eds.application.terraform](./eds/plugins/application/terraform.py)
-* [eds.notification.slack](./eds/plugins/notification/slack.py)
-* [eds.owner.default](./eds/plugins/owner/default.py)
-* [eds.pipeline.jenkinsfile](./docs/plugins/pipeline/jenkins_file.py)
-* [eds.pipeline_provider.jenkins](./eds/plugins/pipeline_provider/jenkins.py)
-* [eds.secrets.parameter_store](./eds/plugins/secrets/parameter_store.py)
-* [eds.tags.default](./eds/plugins/tags/default.py)
-* [eds.worker.aws](./eds/plugins/worker/aws.py)
-* [eds.vcs_provider.github](./eds/plugins/vcs_provider/github.py)
-
+* [eds.config.aws_worker](./eds/plugins/config_aws_worker.py)
+* [eds.config.terraform](./eds/plugins/config_terraform.py)
+* [eds.pipeline.jenkinsfile](./docs/plugins/pipeline_jenkinsfile.py)
+* [eds.pipeline_provider.jenkins](./eds/plugins/pipeline_provider_jenkins.py)
+* [eds.tags.default](./eds/plugins/tags_default.py)
+* [eds.vcs_provider.github](./eds/plugins/vcs_provider_github.py)
 
 ## Plugin Interfaces
 
-* [eds.application](./eds/interfaces/application.py)
-* [eds.notification](./eds/interfaces/notification.py)
-* [eds.owner](./eds/interfaces/owner.py)
+* [eds.config](./eds/interfaces/application.py)
 * [eds.pipeline](./eds/interfaces/pipeline.py)
 * [eds.pipeline_provider](./eds/interfaces/pipeline_provider.py)
-* [eds.secrets](./eds/interfaces/secrets.py)
 * [eds.tags](./eds/interfaces/tags.py)
 * [eds.task](./eds/interfaces/task.py)
-* [eds.worker](/eds/interfaces/worker.py)
 * [eds.vcs_provider](./eds/interfaces/vcs_provider.py)
 
 # Upgrading

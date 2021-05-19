@@ -3,6 +3,8 @@ from eds.interfaces.plugin import Plugin
 
 class VcsProvider(Plugin):
 
+    interface_name = "eds.vcs_provider"
+
     schema = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "eds.vcs_provider",
@@ -28,6 +30,9 @@ class VcsProvider(Plugin):
 
 
 class VcsProject():
+
+    def clone(self):
+        pass
 
     def checkout(self):
         pass

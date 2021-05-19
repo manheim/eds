@@ -1,8 +1,9 @@
 
 class Plugin():
 
-    properties = {}
-    plugins = []
+    def __init__(self):
+        self.plugins = []
+        self.properties = {}
 
     def validate(self):
         pass
