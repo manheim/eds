@@ -1,14 +1,14 @@
 #!/usr/bin/python
 
 from setuptools import setup, find_packages
-from eds.version import VERSION
+from eds import __VERSION__
 
 with open("README.md") as fp:
     long_description = fp.read()
 
 setup(
     name='eds',
-    version=VERSION,
+    version=__VERSION__,
     description='The Extensible Deployment System (EDS)',
     long_description=long_description,
     long_description_content_type='text/markdown',
