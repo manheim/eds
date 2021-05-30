@@ -77,14 +77,13 @@ def test_includes(monkeypatch):
     monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
     event = Event(True, True, '/child', 'project', 'project==1.0')
     p = Project(event)
-    assert len(p._get_plugins()) == 3
+    assert len(p.plugins) == 3
 
 
 def test_overridden(monkeypatch):
     monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
     event = Event(True, True, '/child', 'project', 'project==1.0')
     p = Project(event)
-    p._get_plugins()
     assert len([plugin for plugin in p.plugins if plugin.overridden]) == 2
 
 
@@ -92,18 +91,18 @@ def test_property_inheritance(monkeypatch):
     monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
     event = Event(True, True, '/child', 'project', 'project==1.0')
     p = Project(event)
-    assert len(p._get_plugins()) == 3
-    assert p._get_plugins()[0].yaml['properties'] == {
+    assert len(p.plugins) == 3
+    assert p.plugins[0].yaml['properties'] == {
         'p1': 'grandparent',
         'p2': 'grandparent'
     }
-    assert p._get_plugins()[1].yaml['properties'] == {
+    assert p.plugins[1].yaml['properties'] == {
         'p1': 'parent',
         'p2': 'grandparent',
         'p4': 'parent',
         'p5': 'parent'
     }
-    assert p._get_plugins()[2].yaml['properties'] == {
+    assert p.plugins[2].yaml['properties'] == {
         'p1': 'child',
         'p2': 'grandparent',
         'p4': 'child',
