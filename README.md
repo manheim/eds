@@ -2,7 +2,7 @@
 
 The Extensible Deployment System (EDS)
 
-**UNDER CONSTRUCTION**
+(*UNDER CONSTRUCTION*)
 
 ## Overview
 
