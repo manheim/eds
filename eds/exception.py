@@ -2,6 +2,10 @@ class EdsError(Exception):
     """EDS base exception"""
 
 
+class CircularIncludeError(Exception):
+    """Raised when a circulaur include occurs"""
+
+
 class PluginNameNotFoundError(EdsError):
     """Raised when a specific plugin is not found"""
 

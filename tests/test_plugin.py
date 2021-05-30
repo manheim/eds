@@ -2,7 +2,7 @@
 import pkg_resources
 import pytest
 
-from eds.plugin import _get_plugins, get_plugins, get_plugin
+from eds.extend import _get_plugins, get_plugins, get_plugin
 from eds.exception import (PluginNameNotFoundError, NoPluginsFoundError,
                            DuplicatePluginError, PluginNameMismatchError,
                            PluginNoNameAttributeError)
@@ -31,7 +31,7 @@ def patch_working_set(monkeypatch, plugin_class, no_ep=False, dupe=False):
         dists = [dist, dist]
     else:
         dists = [dist]
-    monkeypatch.setattr('eds.plugin.pkg_resources.WorkingSet.__iter__', lambda self: iter(dists))
+    monkeypatch.setattr('eds.extend.pkg_resources.WorkingSet.__iter__', lambda self: iter(dists))
 
 
 def test_get_plugin(monkeypatch):

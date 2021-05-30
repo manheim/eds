@@ -1,5 +1,6 @@
+from eds.event import Event
 from eds.main import main
 
 
 def cli():
-    main()
+    main(Event.init_from_local())
