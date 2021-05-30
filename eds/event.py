@@ -11,12 +11,12 @@ class Event():
         self._project_name = project_name
         self._project_version = project_version
         self._vcs_provider = self._get_vcs_provider()
-        self._eds_yml = self._get_eds_yml()
+        self._eds_yaml = self._get_eds_yaml()
 
-    def _get_vcs_proviver(self):
+    def _get_vcs_provider(self):
         pass
 
-    def _get_eds_yml(self):
+    def _get_eds_yaml(self):
         pass
 
     ##############
@@ -47,12 +47,12 @@ class Event():
         return self._eds_plugins_built
 
     @property
-    def eds_yml(self):
+    def eds_yaml(self):
         return self._eds_built
 
     @property
     def eds_version(self):
-        return self._eds_yml['version']
+        return self._eds_yaml['version']
 
     @property
     def project_name(self):

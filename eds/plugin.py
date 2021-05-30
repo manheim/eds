@@ -5,8 +5,8 @@ class Plugin():
     eds_schema = {}
     properties_schema = {}
 
-    def __init__(self, plugin_yml):
-        self._yml = self._validate(plugin_yml)
+    def __init__(self, yaml):
+        self._yaml = self._validate(yaml)
         self.overridden = False
 
     def _validate(self, yaml):
@@ -22,7 +22,7 @@ class Plugin():
 
     @property
     def id(self):
-        return self._yml['id']
+        return self._yaml['id']
 
     @property
     def plugins(self):
