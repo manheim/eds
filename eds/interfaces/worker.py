@@ -1,17 +1,17 @@
 from eds.interfaces.plugin import Plugin
 
 
-class Config(Plugin):
+class Worker(Plugin):
 
-    interface_name = "eds.config"
+    interface_name = "eds.worker"
 
     schema = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "$id": "eds.application",
-        "title": "Configuration",
+        "$id": "eds.tags",
+        "title": "Tags",
         "type": "object",
         "properties": {}
     }
 
-    def generate(self):
+    def build_eds(self, eds_version, plugin_versions):
         pass

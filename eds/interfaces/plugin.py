@@ -1,12 +1,9 @@
 
+
 class Plugin():
 
-    def __init__(self):
-        self.plugins = []
-        self.properties = {}
-
-    def validate(self):
+    def get_plugins(self):
         pass
 
-    def generate(self):
+    def validate(self):
         pass

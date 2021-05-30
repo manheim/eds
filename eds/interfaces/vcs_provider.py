@@ -13,13 +13,7 @@ class VcsProvider(Plugin):
         "properties": {}
     }
 
-    def test_hook_event(self):
-        pass
-
-    def parse_hook_event(self):
-        pass
-
-    def get_project(self):
+    def parse_webhook_event(self):
         pass
 
     def create_project(self):
@@ -28,17 +22,5 @@ class VcsProvider(Plugin):
     def delete_project(self):
         pass
 
-
-class VcsProject():
-
-    def clone(self):
-        pass
-
-    def checkout(self):
-        pass
-
-    def commit(self):
-        pass
-
-    def push(self):
+    def get_project(self):
         pass

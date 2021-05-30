@@ -12,3 +12,6 @@ class Pipeline(Plugin):
         "type": "object",
         "properties": {}
     }
+
+    def build(self):
+        pass
