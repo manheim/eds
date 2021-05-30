@@ -39,9 +39,9 @@ class Project:
         for plugin_yaml in self._yaml['plugins']:
             plugin = Plugin(plugin_yaml)
             self._lookup[self._event.url + plugin.id] = plugin
-            for child_plugin in plugin.child_plugins:
-                self._lookup[self._event.url + child_plugin.id] = child_plugin
-                plugins.append(child_plugin)
+            for descendant in plugin.descendants:
+                self._lookup[self._event.url + descendant.id] = descendant
+                plugins.append(descendant)
             plugins.append(plugin)
         return plugins
 

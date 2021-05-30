@@ -18,9 +18,6 @@ class Plugin():
     def validate(self):
         pass
 
-    def get_child_plugins(self):
-        return []
-
     @property
     def id(self):
         return self._yaml['id']
@@ -30,9 +27,13 @@ class Plugin():
         return self._yaml
 
     @property
-    def child_plugins(self):
+    def children(self):
+        return []
+
+    @property
+    def descendants(self):
         plugins = []
-        for plugin in self.get_child_plugins():
-            plugins += plugin.get_child_plugins()
+        for plugin in self.children:
+            plugins += plugin.children
             plugins.append(plugin)
         return plugins
