@@ -25,7 +25,7 @@ def patch_working_set(monkeypatch, plugin_class, no_ep=False, dupe=False):
     if no_ep:
         monkeypatch.setattr(dist, 'get_entry_map', lambda group: {})
     else:
-        ep = pkg_resources.EntryPoint.parse("testname = tests.test_plugin:%s" % plugin_class, dist=dist)
+        ep = pkg_resources.EntryPoint.parse("testname = tests.test_extend:%s" % plugin_class, dist=dist)
         monkeypatch.setattr(dist, 'get_entry_map', lambda group: {'testname': ep})
     if dupe:
         dists = [dist, dist]

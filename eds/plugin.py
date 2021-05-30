@@ -6,10 +6,11 @@ class Plugin():
     properties_schema = {}
 
     def __init__(self, yaml):
-        self._yaml = self._validate(yaml)
+        self._yaml = yaml
+        self._validate()
         self.overridden = False
 
-    def _validate(self, yaml):
+    def _validate(self):
         # jsonschema(eds_schema)
         # jsonschema(properties_schema)
         self.validate()
@@ -17,17 +18,21 @@ class Plugin():
     def validate(self):
         pass
 
-    def get_plugins(self):
-        pass
+    def get_child_plugins(self):
+        return []
 
     @property
     def id(self):
         return self._yaml['id']
 
     @property
-    def plugins(self):
+    def yaml(self):
+        return self._yaml
+
+    @property
+    def child_plugins(self):
         plugins = []
-        for plugin in self.get_plugins():
-            plugins += plugin.get_plugins()
+        for plugin in self.get_child_plugins():
+            plugins += plugin.get_child_plugins()
             plugins.append(plugin)
         return plugins

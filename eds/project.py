@@ -11,22 +11,24 @@ EDS_YML_FILE = 'eds.yml'
 class Project:
 
     def __init__(self, event, lookup=None):
-        if event.url in lookup:
-            raise CircularIncludeError()
         self._event = event
         self._yaml = self._validate(event.eds_yaml)
         if lookup is None:
             self._lookup = {}
-            self._plugins = self._get_plugins(self)
+            self._plugins = self._get_plugins()
             [self._apply_inheritance(p) for p in self._plugins]
+        elif event.url in lookup:
+            raise CircularIncludeError()
+        else:
+            self._lookup = lookup
 
     def _validate(self, eds_yaml):
-        pass
+        return eds_yaml
 
     def _get_includes(self):
         includes = []
-        for include in self.yaml['include']:
-            event = Event.from_include(include['url'], self._event)
+        for include in self._yaml['include']:
+            event = Event.init_from_include(include, self._event)
             includes.append(Project(event, self._lookup))
         return includes
 
@@ -37,7 +39,7 @@ class Project:
         for plugin_yaml in self._yaml['plugins']:
             plugin = Plugin(plugin_yaml)
             self._lookup[self._event.url + plugin.id] = plugin
-            for child_plugin in plugin.plugins:
+            for child_plugin in plugin.child_plugins:
                 self._lookup[self._event.url + child_plugin.id] = child_plugin
                 plugins.append(child_plugin)
             plugins.append(plugin)
@@ -49,10 +51,16 @@ class Project:
             parent_plugin = self._lookup[parent_ref.get('url', self._event.url) + parent_ref['plugin_id']]
             parent_plugin.overridden = True
             self._apply_inheritance(parent_plugin)
-        plugin.yaml['properties'] = deepcopy(self.parent_plugin.yaml['properties']).update(plugin.yaml['properties'])
+            new_properties = deepcopy(parent_plugin.yaml['properties'])
+            new_properties.update(plugin.yaml['properties'])
+            plugin.yaml['properties'] = new_properties
 
     @property
-    def plugin_verions(self):
+    def plugins(self):
+        return self._plugins
+
+    @property
+    def plugin_versions(self):
         return [p.yaml['version'] for p in self._plugins if not p.overridden]
 
     @property

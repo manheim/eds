@@ -47,8 +47,12 @@ class Event():
         return self._eds_plugins_built
 
     @property
+    def url(self):
+        return self._url
+
+    @property
     def eds_yaml(self):
-        return self._eds_built
+        return self._eds_yaml
 
     @property
     def eds_version(self):
