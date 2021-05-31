@@ -4,6 +4,8 @@ The Extensible Deployment System (EDS)
 
 (*UNDER CONSTRUCTION*)
 
+[![Build Status](https://travis-ci.org/manheim/eds.svg?branch=main)](https://travis-ci.org/manheim/eds)
+
 ## Overview
 
 * Configure deployments using a single "eds.yml" file.
