@@ -32,7 +32,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'eds=eds.cli:main',
+            'eds=eds.cli:cli',
         ]
     }
 )
