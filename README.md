@@ -4,7 +4,7 @@ The Extensible Deployment System (EDS)
 
 (*UNDER CONSTRUCTION*)
 
-[![Build Status](https://travis-ci.com/manheim/eds.svg?branch=master)](https://travis-ci.com/manheim/eds)
+[![Build Status](https://travis-ci.com/manheim/eds.svg?branch=main)](https://travis-ci.com/manheim/eds)
 
 ## Overview
 
