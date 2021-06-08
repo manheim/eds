@@ -1,4 +1,6 @@
 from eds.event import Event
+from eds import project
+from eds.plugin import Plugin
 from eds.project import Project
 
 eds_yml_grandparent = {
@@ -6,7 +8,8 @@ eds_yml_grandparent = {
     'plugins': [
         {
             'id': 'yo',
-            'type': 'Yo',
+            'name': 'Foo',
+            'type': 'Bar',
             'version': 'yo==1.0',
             'properties': {
                 'p1': 'grandparent',
@@ -24,11 +27,12 @@ eds_yml_parent = {
     'plugins': [
         {
             'id': 'yo',
-            'type': 'Yo',
+            'name': 'Foo',
+            'type': 'Bar',
             'version': 'yo==1.0',
             'parent': {
                 'url': '/grandparent',
-                'plugin_id': 'yo'
+                'id': 'yo'
             },
             'properties': {
                 'p1': 'parent',
@@ -47,11 +51,12 @@ eds_yml_child = {
     'plugins': [
         {
             'id': 'yo',
-            'type': 'Yo',
+            'name': 'Foo',
+            'type': 'Bar',
             'version': 'yo==1.0',
             'parent': {
                 'url': '/parent',
-                'plugin_id': 'yo'
+                'id': 'yo'
             },
             'properties': {
                 'p1': 'child',
@@ -75,6 +80,7 @@ def _get_eds_yaml(self):
 
 def test_includes(monkeypatch):
     monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
+    monkeypatch.setattr(project, 'get_plugin', lambda group, name: Plugin)
     event = Event(True, True, '/child', 'project', 'project==1.0')
     p = Project(event)
     assert len(p.plugins) == 3
@@ -82,6 +88,7 @@ def test_includes(monkeypatch):
 
 def test_overridden(monkeypatch):
     monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
+    monkeypatch.setattr(project, 'get_plugin', lambda group, name: Plugin)
     event = Event(True, True, '/child', 'project', 'project==1.0')
     p = Project(event)
     assert len([plugin for plugin in p.plugins if plugin.overridden]) == 2
@@ -89,6 +96,7 @@ def test_overridden(monkeypatch):
 
 def test_property_inheritance(monkeypatch):
     monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
+    monkeypatch.setattr(project, 'get_plugin', lambda group, name: Plugin)
     event = Event(True, True, '/child', 'project', 'project==1.0')
     p = Project(event)
     assert len(p.plugins) == 3

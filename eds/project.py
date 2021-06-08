@@ -1,8 +1,8 @@
 from copy import deepcopy
 
 from eds.event import Event
+from eds.extend import get_plugin
 from eds.exception import CircularIncludeError
-from eds.plugin import Plugin
 
 
 EDS_YML_FILE = 'eds.yml'
@@ -37,7 +37,7 @@ class Project:
         for include in self._get_includes():
             plugins += include._get_plugins()
         for plugin_yaml in self._yaml['plugins']:
-            plugin = Plugin(plugin_yaml)
+            plugin = get_plugin(plugin_yaml['type'], plugin_yaml['name'])(plugin_yaml)
             self._lookup[self._event.url + plugin.id] = plugin
             for descendant in plugin.descendants:
                 self._lookup[self._event.url + descendant.id] = descendant
@@ -48,7 +48,7 @@ class Project:
     def _apply_inheritance(self, plugin):
         parent_ref = plugin.yaml.get('parent')
         if parent_ref:
-            parent_plugin = self._lookup[parent_ref.get('url', self._event.url) + parent_ref['plugin_id']]
+            parent_plugin = self._lookup[parent_ref.get('url', self._event.url) + parent_ref['id']]
             parent_plugin.overridden = True
             self._apply_inheritance(parent_plugin)
             new_properties = deepcopy(parent_plugin.yaml['properties'])
