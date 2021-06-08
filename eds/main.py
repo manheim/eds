@@ -1,6 +1,6 @@
 from eds.exception import EdsError
 from eds.interfaces.worker import Worker
-from eds.plugin import get_plugin
+from eds.extend import get_plugin
 from eds.project import Project
 
 
