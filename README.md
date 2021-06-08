@@ -29,11 +29,12 @@ version:
 includes:
 plugins:
     - id:
+      name:
       type:
       version:
       parent:
           url:
-          plugin_id:
+          id:
       properties:
 ```
 
@@ -42,20 +43,21 @@ plugins:
 * `include`: (optional) A list of `eds.yml` URLs to include.
 * `plugins`: (required) A list of plugin configurations.
     * `id`: (required) An id to refer to this plugin configuraton.
-    * `type`: (required) The type of plugin to be used.
+    * `name`: (required) The plugin name.
+    * `type`: (required) The plugin type.
     * `version`: (optional) The plugin version in the form of a pip install
       requirement. Not required for built-in plugins.
     * `parent`: (optional) A parent plugin configuration to inherit from.
         * `url`: (optional) The EDS url containing the plugin.  Not required, if
           included in this file.
-        * `plugin_id`: (required) The plugin id.
+        * `id`: (required) The plugin id.
     * `properties`: (optional) A properties dictionary.
 
 
 ## Built-in Plugins
 
 
-## Plugin Interfaces
+## Plugin Types
 
 * [eds.config](./eds/interfaces/config.py)
 * [eds.pipeline](./eds/interfaces/pipeline.py)
