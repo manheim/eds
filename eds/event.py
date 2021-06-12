@@ -19,8 +19,6 @@ class Event():
     def _get_eds_yaml(self):
         pass
 
-    ##############
-
     @classmethod
     def init_from_webhook(cls, eds_built, eds_plugins_built, webhook_data):
         pass
@@ -35,8 +33,6 @@ class Event():
         cwd = os.getcwd()
         project = os.path.basename(cwd)
         return Event(True, True, cwd, project, '.')
-
-    ##############
 
     @property
     def eds_built(self):
