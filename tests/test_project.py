@@ -1,7 +1,10 @@
+import pytest
 from eds.event import Event
+from eds.exception import CircularIncludeError
 from eds import project
 from eds.plugin import Plugin
 from eds.project import Project
+
 
 eds_yml_grandparent = {
     'include': [],
@@ -64,9 +67,23 @@ eds_yml_child = {
                 'p6': 'child',
             }
 
+        },
+        {
+            'id': 'go',
+            'name': 'Too',
+            'type': 'eds.pipeline',
+            'version': 'go==1.0',
+            'properties': {}
         }
     ]
 }
+
+
+def _setup(monkeypatch):
+    monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
+    monkeypatch.setattr(project, 'get_plugin', lambda group, name: Plugin)
+    event = Event(True, True, '/child', 'project', 'project==1.0')
+    return Project(event)
 
 
 def _get_eds_yaml(self):
@@ -79,27 +96,18 @@ def _get_eds_yaml(self):
 
 
 def test_includes(monkeypatch):
-    monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
-    monkeypatch.setattr(project, 'get_plugin', lambda group, name: Plugin)
-    event = Event(True, True, '/child', 'project', 'project==1.0')
-    p = Project(event)
-    assert len(p.plugins) == 3
+    p = _setup(monkeypatch)
+    assert len(p.plugins) == 4
 
 
 def test_overridden(monkeypatch):
-    monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
-    monkeypatch.setattr(project, 'get_plugin', lambda group, name: Plugin)
-    event = Event(True, True, '/child', 'project', 'project==1.0')
-    p = Project(event)
+    p = _setup(monkeypatch)
     assert len([plugin for plugin in p.plugins if plugin.overridden]) == 2
 
 
 def test_property_inheritance(monkeypatch):
-    monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
-    monkeypatch.setattr(project, 'get_plugin', lambda group, name: Plugin)
-    event = Event(True, True, '/child', 'project', 'project==1.0')
-    p = Project(event)
-    assert len(p.plugins) == 3
+    p = _setup(monkeypatch)
+    assert len(p.plugins) == 4
     assert p.plugins[0].yaml['properties'] == {
         'p1': 'grandparent',
         'p2': 'grandparent'
@@ -117,3 +125,26 @@ def test_property_inheritance(monkeypatch):
         'p5': 'parent',
         'p6': 'child'
     }
+
+
+def test_plugins_property(monkeypatch):
+    p = _setup(monkeypatch)
+    for plugin in p.plugins:
+        assert type(plugin).__name__ == 'Plugin'
+
+
+def test_plugin_versions_property(monkeypatch):
+    p = _setup(monkeypatch)
+    assert p.plugin_versions == ['yo==1.0', 'go==1.0']
+
+
+def test_pipelines_property(monkeypatch):
+    p = _setup(monkeypatch)
+    assert len(p.pipelines) == 1
+    assert p.pipelines[0].yaml['name'] == 'Too'
+
+
+def test_circular_include():
+    event = Event(True, True, '/child', 'project', 'project==1.0')
+    with pytest.raises(CircularIncludeError):
+        return Project(event, {'/child': ''})
