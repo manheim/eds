@@ -1,18 +1,33 @@
+"""eds.project module."""
+
+from __future__ import annotations
 from copy import deepcopy
+from typing import Dict, List
 
 from eds.event import Event
 from eds.extend import get_plugin
 from eds.exception import CircularIncludeError
+from eds.plugin import Plugin
 
 
-EDS_YML_FILE = 'eds.yml'
+EDS_YML_FILE: str = 'eds.yml'
 
 
 class Project:
+    """A project containing an 'eds.yml' file."""
 
-    def __init__(self, event, lookup=None):
+    def __init__(self, event: Event, lookup: Dict = None):
+        """Project constructor.
+
+        Args:
+            event (Event): Commit event for the project.
+            lookup (Dict, optional): Lookup dict for discovered plugins. Defaults to None.
+
+        Raises:
+            CircularIncludeError: If an 'eds.yml' file is included more than once.
+        """
         self._event = event
-        self._yaml = self._validate(event.eds_yaml)
+        self._yaml: Dict = self._validate(event.eds_yaml)
         if lookup is None:
             self._lookup = {}
             self._plugins = self._get_plugins()
@@ -22,17 +37,35 @@ class Project:
         else:
             self._lookup = lookup
 
-    def _validate(self, eds_yaml):
+    def _validate(self, eds_yaml: Dict) -> Dict:
+        """Validate 'eds.yml' using it's schema.
+
+        Args:
+            eds_yaml (Dict): The yaml from 'eds.yml'
+
+        Returns:
+            Dict: Validated yaml.
+        """
         return eds_yaml
 
-    def _get_includes(self):
-        includes = []
+    def _get_includes(self) -> List[Project]:
+        """Recursively discover the included 'eds.yml' projects.
+
+        Returns:
+            List[Project]: The list of discovered projects.
+        """
+        includes: List[Project] = []
         for include in self._yaml['include']:
             event = Event.init_from_include(include, self._event)
             includes.append(Project(event, self._lookup))
         return includes
 
-    def _get_plugins(self):
+    def _get_plugins(self) -> List[Plugin]:
+        """Recursively discover all the plugins.
+
+        Returns:
+            List[Plugin]: The list of discovered plugins.
+        """
         plugins = []
         for include in self._get_includes():
             plugins += include._get_plugins()
@@ -45,7 +78,12 @@ class Project:
             plugins.append(plugin)
         return plugins
 
-    def _apply_inheritance(self, plugin):
+    def _apply_inheritance(self, plugin: Plugin) -> None:
+        """Gather parent properties recursively.  Mark parent plugins as overridden.
+
+        Args:
+            plugin (Plugin): The plugin to apply.
+        """
         parent_ref = plugin.yaml.get('parent')
         if parent_ref:
             parent_plugin = self._lookup[parent_ref.get('url', self._event.url) + parent_ref['id']]
@@ -56,13 +94,28 @@ class Project:
             plugin.yaml['properties'] = new_properties
 
     @property
-    def plugins(self):
+    def plugins(self) -> List[Plugin]:
+        """The list of discovered plugins.
+
+        Returns:
+            List[Plugin]: The list of discovered plugins
+        """
         return self._plugins
 
     @property
-    def plugin_versions(self):
+    def plugin_versions(self) -> List[str]:
+        """The list of plugin pip install requirments.
+
+        Returns:
+            List[str]: The list of plugin pip install requirments.
+        """
         return [p.yaml['version'] for p in self._plugins if not p.overridden]
 
     @property
-    def pipelines(self):
+    def pipelines(self) -> List[Plugin]:
+        """The list of discovered pipelines, excluding overridden.
+
+        Returns:
+            List[Plugin]: The list of discovered pipelines, excluding overridden.
+        """
         return [p for p in self._plugins if not p.overridden and p.yaml['type'] == 'eds.pipeline']
