@@ -1,6 +1,6 @@
 import pytest
 from eds.event import Event
-from eds.exception import CircularIncludeError
+from eds.exception import DuplicateIncludeError
 from eds import project
 from eds.plugin import Plugin
 from eds.project import Project
@@ -144,7 +144,7 @@ def test_pipelines_property(monkeypatch):
     assert p.pipelines[0].yaml['name'] == 'Too'
 
 
-def test_circular_include():
+def test_duplicate_include():
     event = Event(True, True, '/child', 'project', 'project==1.0')
-    with pytest.raises(CircularIncludeError):
+    with pytest.raises(DuplicateIncludeError):
         return Project(event, {'/child': ''})

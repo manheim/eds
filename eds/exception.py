@@ -2,8 +2,8 @@ class EdsError(Exception):
     """EDS base exception"""
 
 
-class CircularIncludeError(Exception):
-    """Raised when a circulaur include occurs"""
+class DuplicateIncludeError(Exception):
+    """Raised when a duplicate include occurs"""
 
 
 class PluginNameNotFoundError(EdsError):

@@ -6,7 +6,7 @@ from typing import Dict, List
 
 from eds.event import Event
 from eds.extend import get_plugin
-from eds.exception import CircularIncludeError
+from eds.exception import DuplicateIncludeError
 from eds.plugin import Plugin
 
 
@@ -24,7 +24,7 @@ class Project:
             lookup (Dict, optional): Lookup dict for discovered plugins. Defaults to None.
 
         Raises:
-            CircularIncludeError: If an 'eds.yml' file is included more than once.
+            DuplicateIncludeError: If an 'eds.yml' file is included more than once.
         """
         self._event = event
         self._yaml: Dict = self._validate(event.eds_yaml)
@@ -32,10 +32,11 @@ class Project:
             self._lookup = {}
             self._plugins = self._get_plugins()
             [self._apply_inheritance(p) for p in self._plugins]
-        elif event.url in lookup:
-            raise CircularIncludeError()
+        elif self._event.url in lookup:
+            raise DuplicateIncludeError("%s has already been included" % self._event.url)
         else:
             self._lookup = lookup
+        self._lookup[self._event.url] = {}
 
     def _validate(self, eds_yaml: Dict) -> Dict:
         """Validate 'eds.yml' using it's schema.
@@ -56,6 +57,7 @@ class Project:
         """
         includes: List[Project] = []
         for include in self._yaml['include']:
+            self._lookup[self._event.url] = {}
             event = Event.init_from_include(include, self._event)
             includes.append(Project(event, self._lookup))
         return includes
@@ -71,9 +73,9 @@ class Project:
             plugins += include._get_plugins()
         for plugin_yaml in self._yaml['plugins']:
             plugin = get_plugin(plugin_yaml['type'], plugin_yaml['name'])(plugin_yaml)
-            self._lookup[self._event.url + plugin.id] = plugin
+            self._lookup[self._event.url][plugin.id] = plugin
             for descendant in plugin.descendants:
-                self._lookup[self._event.url + descendant.id] = descendant
+                self._lookup[self._event.url][descendant.id] = descendant
                 plugins.append(descendant)
             plugins.append(plugin)
         return plugins
@@ -86,7 +88,7 @@ class Project:
         """
         parent_ref = plugin.yaml.get('parent')
         if parent_ref:
-            parent_plugin = self._lookup[parent_ref.get('url', self._event.url) + parent_ref['id']]
+            parent_plugin = self._lookup[parent_ref.get('url', self._event.url)][parent_ref['id']]
             parent_plugin.overridden = True
             self._apply_inheritance(parent_plugin)
             new_properties = deepcopy(parent_plugin.yaml['properties'])
