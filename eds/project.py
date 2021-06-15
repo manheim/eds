@@ -10,6 +10,7 @@ from eds.plugin import Plugin
 
 
 EDS_YML_FILE: str = 'eds.yml'
+EDS_YML_SCHEMA: Dict = {}
 
 
 class Project:
@@ -26,7 +27,8 @@ class Project:
             DuplicateIncludeError: If an 'eds.yml' file is included more than once.
         """
         self._event = event
-        self._yaml: Dict = self._validate(event.eds_yaml)
+        self._yaml = event.eds_yaml
+        self._validate()
         if lookup is None:
             self._lookup = {}
             self._plugins = self._get_plugins()
@@ -37,16 +39,9 @@ class Project:
             self._lookup = lookup
         self._lookup[self._event.url] = {}
 
-    def _validate(self, eds_yaml: Dict) -> Dict:
-        """Validate 'eds.yml' using it's schema.
-
-        Args:
-            eds_yaml (Dict): The yaml from 'eds.yml'
-
-        Returns:
-            Dict: Validated yaml.
-        """
-        return eds_yaml
+    def _validate(self) -> None:
+        """Validate 'self._yaml' using schema in `EDS_YML_SCHEMA`."""
+        pass
 
     def _get_includes(self) -> List[Project]:
         """Recursively discover the included 'eds.yml' projects.
