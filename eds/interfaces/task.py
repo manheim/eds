@@ -2,6 +2,7 @@ from eds.interfaces.plugin import Plugin
 
 
 class Task(Plugin):
+    """eds.task interface."""
 
     interface_name = "eds.task"
 

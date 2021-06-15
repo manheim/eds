@@ -1,9 +1,20 @@
 
+from __future__ import annotations
+from typing import List
+
 
 class Plugin():
+    """general plugin interface."""
 
-    def get_plugins(self):
-        pass
+    @property
+    def children(self) -> List[Plugin]:
+        """The list of child plugins.
 
-    def validate(self):
+        Returns:
+            List[Plugin]: The list of child plugins.
+        """
+        return []
+
+    def validate(self) -> None:
+        """Validate the plugin."""
         pass

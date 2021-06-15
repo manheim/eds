@@ -2,6 +2,7 @@ from eds.interfaces.plugin import Plugin
 
 
 class Pipeline(Plugin):
+    """eds.pipeline interface."""
 
     interface_name = "eds.pipeline"
 
@@ -13,5 +14,6 @@ class Pipeline(Plugin):
         "properties": {}
     }
 
-    def build(self):
+    def build(self) -> None:
+        """Build the pipeline configuration."""
         pass

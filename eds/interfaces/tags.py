@@ -2,6 +2,7 @@ from eds.interfaces.plugin import Plugin
 
 
 class Tags(Plugin):
+    """eds.tags interface."""
 
     interface_name = "eds.tags"
 

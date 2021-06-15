@@ -1,7 +1,9 @@
+
 from eds.interfaces.plugin import Plugin
 
 
 class Config(Plugin):
+    """eds.config interface."""
 
     interface_name = "eds.config"
 
@@ -13,5 +15,6 @@ class Config(Plugin):
         "properties": {}
     }
 
-    def generate(self):
+    def generate(self) -> None:
+        """Generate the config."""
         pass
