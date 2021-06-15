@@ -1,12 +1,26 @@
+"""eds.extend module."""
+
+from __future__ import annotations
 import pkg_resources
+from typing import Dict, Iterator
 
 from eds.exception import (PluginNameNotFoundError, NoPluginsFoundError,
                            DuplicatePluginError, PluginNameMismatchError,
                            PluginNoNameAttributeError)
+from eds.interfaces.plugin import Plugin
 
 
-def _iter_entry_points(group, name=None, project=None):
-    """Yield entry point objects from `group` matching `name`, and `project`"""
+def _iter_entry_points(group: str, name: str = None, project: str = None) -> Iterator[Plugin]:
+    """Yield entry point objects from `group` matching `name`, and `project`.
+
+    Args:
+        group (str): [description]
+        name (str, optional): [description]. Defaults to None.
+        project (str, optional): [description]. Defaults to None.
+
+    Yields:
+        Iterator[Plugin]: Iterator of plugins.
+    """
     for dist in pkg_resources.working_set:
         if project and dist.project_name != project:
             continue
@@ -18,14 +32,25 @@ def _iter_entry_points(group, name=None, project=None):
             yield entries[name]
 
 
-def _get_plugins(group, name=None, project=None):
-    """Return a dict of plugins by name from a certain `group`, filtered by `name`
-    and/or `project` if given.
+def _get_plugins(group: str, name: str = None, project: str = None) -> Dict:
+    """Return a dict of plugins.
 
-    :param group: plugin group
-    :param name: plugin name
-    :param project: project name
+    By name from a certain `group`, filtered by `name` and/or `project` if given.
 
+    Args:
+        group (str): Plugin group.
+        name (str, optional): Plugin name. Defaults to None.
+        project (str, optional): Project. Defaults to None.
+
+    Raises:
+        PluginNameMismatchError: When name doesn't match.
+        PluginNoNameAttributeError: When there is no name attribute.
+        DuplicatePluginError: When there are duplicate plugins.
+        PluginNameNotFoundError: When no plugin with that name is found.
+        NoPluginsFoundError: When no plugins are found.
+
+    Returns:
+        Dict: A dict of plugins by name.
     """
     plugins = {}
     for entry_point in _iter_entry_points(group, name=name, project=project):
@@ -48,19 +73,27 @@ def _get_plugins(group, name=None, project=None):
     return plugins
 
 
-def get_plugin(group, name):
-    """Return a single plugin by `group` and `name`
+def get_plugin(group: str, name: str) -> Plugin:
+    """Return a single plugin by `group` and `name`.
 
-    :param group: plugin group
-    :param name: plugin name
+    Args:
+        group (str): Plugin group.
+        name (str): Plugin name
+
+    Returns:
+        Plugin: The discovered plugin.
     """
     return _get_plugins(group, name)[name]
 
 
-def get_plugins(group, project=None):
-    """Return a dict of plugins by `group`, and optionally filtered by `project`
+def get_plugins(group: str, project: str = None) -> Dict:
+    """Return a dict of plugins by `group`, and optionally filtered by `project`.
 
-    :param group: plugin group
-    :param project: project name
+    Args:
+        group (str): Plugin group.
+        project (str, optional): Project. Defaults to None.
+
+    Returns:
+        Dict: Dict of plugins.
     """
     return _get_plugins(group, project=project)
