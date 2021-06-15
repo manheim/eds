@@ -1,4 +1,3 @@
-"""eds.cli module."""
 
 from eds.event import Event
 from eds.main import main

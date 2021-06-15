@@ -1,4 +1,3 @@
-"""eds.main module."""
 
 from __future__ import annotations
 from eds.interfaces.worker import Worker

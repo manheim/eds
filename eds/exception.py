@@ -1,5 +1,3 @@
-"""eds.exception module."""
-
 
 class EdsError(Exception):
     """EDS base exception."""
