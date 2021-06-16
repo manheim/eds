@@ -10,11 +10,13 @@ from eds.plugin import Plugin
 
 
 EDS_YML_FILE: str = 'eds.yml'
-EDS_YML_SCHEMA: Dict = {}
 
 
 class Project:
     """A project containing an 'eds.yml' file."""
+
+    schema: Dict = {}
+    """json schema for eds.yml"""
 
     def __init__(self, event: Event, lookup: Dict = None):
         """Project constructor.
@@ -28,7 +30,7 @@ class Project:
         """
         self._event = event
         self._yaml = event.eds_yaml
-        self._validate()
+        self._validate_schema()
         if lookup is None:
             self._lookup = {}
             self._plugins = self._get_plugins()
@@ -39,8 +41,8 @@ class Project:
             self._lookup = lookup
         self._lookup[self._event.url] = {}
 
-    def _validate(self) -> None:
-        """Validate 'self._yaml' using schema in `EDS_YML_SCHEMA`."""
+    def _validate_schema(self) -> None:
+        """Validate 'self._yaml' using schema in `Project.schema`."""
         pass
 
     def _get_includes(self) -> List[Project]:

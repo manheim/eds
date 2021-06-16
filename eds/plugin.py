@@ -6,8 +6,11 @@ from typing import Dict, List
 class Plugin():
     """Base class for EDS plugins."""
 
-    eds_schema: Dict = {}
-    properties_schema: Dict = {}
+    schema: Dict = {}
+    """json schema for plugin properties.
+
+    An abstract attribute implemented by specific plugin classes.
+    """
 
     def __init__(self, yaml: Dict):
         """Plugin Consructor.
@@ -16,15 +19,13 @@ class Plugin():
             yaml (Dict): Plugin yaml dict.
         """
         self._yaml = yaml
-        self._validate()
+        self._validate_schema()
+        self.validate()
         self.overridden = False
 
-    def _validate(self) -> None:
-        """Validate against the plugin schema.
-
-        Also, call `validate()` for custom validation.
-        """
-        self.validate()
+    def _validate_schema(self) -> None:
+        """Validate against the schema in `Plugin.schema`."""
+        pass
 
     def validate(self) -> None:
         """Abstract method implemented in plugin classes for custom validation."""

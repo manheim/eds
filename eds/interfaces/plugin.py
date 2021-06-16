@@ -1,10 +1,13 @@
 
 from __future__ import annotations
-from typing import List
+from typing import List, Dict
 
 
 class Plugin():
     """general plugin interface."""
+
+    schema: Dict = {}
+    """json schema for plugin properties"""
 
     @property
     def children(self) -> List[Plugin]:
