@@ -1,3 +1,5 @@
+from typing import Dict
+
 from eds.interfaces.plugin import Plugin
 
 
@@ -14,18 +16,22 @@ class VcsProvider(Plugin):
         "properties": {}
     }
 
-    def parse_webhook_event(self) -> None:
-        """Parse webhook event data."""
+    def parse_event(self) -> Dict:
+        """Parse webhook event for project url and ref."""
+        pass
+
+    def get_files(self) -> Dict:
+        """Get project files."""
         pass
 
     def create_project(self) -> None:
-        """Create Project."""
+        """Create a Project."""
         pass
 
     def delete_project(self) -> None:
-        """Delete Project."""
+        """Delete a Project."""
         pass
 
-    def get_project(self) -> None:
-        """Get Project."""
+    def update_project(self) -> None:
+        """Update a Project."""
         pass
