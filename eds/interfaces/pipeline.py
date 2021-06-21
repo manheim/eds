@@ -20,6 +20,7 @@ class Pipeline(PluginInterface):
         """Build the pipeline configuration."""
         pass
 
+
 PluginInterface.register(Pipeline)
 assert issubclass(Pipeline, PluginInterface)
 assert isinstance(Pipeline(), PluginInterface)

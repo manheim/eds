@@ -30,6 +30,7 @@ class PipelineProvider(PluginInterface):
         """Delete a pipeline."""
         pass
 
+
 PluginInterface.register(PipelineProvider)
 assert issubclass(PipelineProvider, PluginInterface)
 assert isinstance(PipelineProvider(), PluginInterface)
