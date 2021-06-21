@@ -4,7 +4,7 @@ from typing import Dict, List
 from eds.interfaces.plugin_interface import PluginInterface
 
 
-class Plugin():
+class Plugin(PluginInterface):
     """Base class for EDS plugins."""
 
     schema: Dict = {}
@@ -74,4 +74,4 @@ class Plugin():
 
 PluginInterface.register(Plugin)
 assert issubclass(Plugin, PluginInterface)
-assert isintance(Plugin(), PluginInterface)
+assert isinstance(Plugin(), PluginInterface)
