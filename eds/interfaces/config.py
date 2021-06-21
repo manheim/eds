@@ -1,8 +1,8 @@
 
-from eds.interfaces.plugin import Plugin
+from eds.interfaces.plugin import PluginInterface
 
 
-class Config(Plugin):
+class Config(PluginInterface):
     """eds.config interface."""
 
     interface_name = "eds.config"

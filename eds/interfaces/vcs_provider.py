@@ -1,9 +1,9 @@
 from typing import Dict
 
-from eds.interfaces.plugin import Plugin
+from eds.interfaces.plugin import PluginInterface
 from abc import ABCMeta, abstractmethod
 
-class VcsProvider(Plugin):
+class VcsProvider(PluginInterface):
     """eds.vcs_provider interface."""
 
     interface_name = "eds.vcs_provider"

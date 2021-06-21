@@ -1,7 +1,7 @@
-from eds.interfaces.plugin import Plugin
+from eds.interfaces.plugin import PluginInterface
 
 
-class Tags(Plugin):
+class Tags(PlugPluginInterfacein):
     """eds.tags interface."""
 
     interface_name = "eds.tags"

@@ -4,14 +4,14 @@ from typing import List, Dict
 from abc import ABCMeta
 
 
-class Plugin(metaclass=ABCMeta):
+class PluginInterface(metaclass=ABCMeta):
     """general plugin interface."""
 
     schema: Dict = {}
     """json schema for plugin properties"""
 
     @property
-    def children(self) -> List[Plugin]:
+    def children(self) -> List[PluginInterface]:
         """The list of child plugins.
 
         Returns:

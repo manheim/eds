@@ -1,7 +1,7 @@
-from eds.interfaces.plugin import Plugin
+from eds.interfaces.plugin import PluginInterface
 
 
-class Worker(Plugin):
+class Worker(PluginInterface):
     """eds.worker interface."""
 
     interface_name = "eds.worker"
