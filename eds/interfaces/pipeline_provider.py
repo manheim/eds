@@ -1,5 +1,4 @@
 from abc import abstractmethod
-
 from eds.interfaces.plugin_interface import PluginInterface
 
 
