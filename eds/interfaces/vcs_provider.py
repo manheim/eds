@@ -56,6 +56,7 @@ class GithubProvider(VcsProvider):
 
     def update_project(self) -> None:
         return super().update_project()
+
 class GithubEnterpriseProvider(VcsProvider):
     def parse_event(self) -> Dict:
         return super().parse_event()
