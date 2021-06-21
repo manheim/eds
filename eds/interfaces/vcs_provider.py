@@ -41,6 +41,21 @@ class VcsProvider(Plugin):
         """Update a Project."""
         pass
 
+class GithubProvider(VcsProvider):
+    def parse_event(self) -> Dict:
+        return super().parse_event()
+
+    def get_files(self) -> Dict:
+        return super().get_files()
+
+    def create_project(self) -> None:
+        return super().create_project()
+
+    def delete_project(self) -> None:
+        return super().delete_project()
+
+    def update_project(self) -> None:
+        return super().update_project()
 class GithubEnterpriseProvider(VcsProvider):
     def parse_event(self) -> Dict:
         return super().parse_event()
@@ -57,4 +72,5 @@ class GithubEnterpriseProvider(VcsProvider):
     def update_project(self) -> None:
         return super().update_project()
 
+VcsProvider.register(GithubProvider)
 VcsProvider.register(GithubEnterpriseProvider)
