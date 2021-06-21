@@ -1,7 +1,7 @@
 
 from __future__ import annotations
 from typing import List, Dict
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 
 
 class PluginInterface(metaclass=ABCMeta):
@@ -11,14 +11,16 @@ class PluginInterface(metaclass=ABCMeta):
     """json schema for plugin properties"""
 
     @property
+    @abstractmethod
     def children(self) -> List[PluginInterface]:
         """The list of child plugins.
 
         Returns:
             List[Plugin]: The list of child plugins.
         """
-        return []
+        pass
 
+    @abstractmethod
     def validate(self) -> None:
         """Validate the plugin."""
         pass

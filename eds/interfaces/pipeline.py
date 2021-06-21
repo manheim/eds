@@ -1,4 +1,4 @@
-from eds.interfaces.plugin import PluginInterface
+from eds.interfaces.plugin_interface import PluginInterface
 
 
 class Pipeline(PluginInterface):

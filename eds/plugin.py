@@ -1,7 +1,7 @@
 
 from __future__ import annotations
 from typing import Dict, List
-from eds.interfaces.plugin import PluginInterface
+from eds.interfaces.plugin_interface import PluginInterface
 
 
 class Plugin():
