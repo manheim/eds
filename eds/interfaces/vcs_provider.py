@@ -73,6 +73,5 @@ class GithubEnterpriseProvider(VcsProvider):
     def update_project(self) -> None:
         return super().update_project()
 
-Plugin.register(VcsProvider)
 VcsProvider.register(GithubProvider)
 VcsProvider.register(GithubEnterpriseProvider)
