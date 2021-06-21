@@ -75,4 +75,3 @@ class Plugin():
 PluginInterface.register(Plugin)
 
 assert issubclass(Plugin, PluginInterface)
-assert isinstance(Plugin, PluginInterface)
