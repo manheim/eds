@@ -1,7 +1,7 @@
-from eds.interfaces.plugin_interface import PluginInterface
+from eds.interfaces.plugin import Plugin
 
 
-class Task(PluginInterface):
+class Task(Plugin):
     """eds.task interface."""
 
     interface_name = "eds.task"

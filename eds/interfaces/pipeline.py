@@ -1,7 +1,7 @@
-from eds.interfaces.plugin_interface import PluginInterface
+from eds.interfaces.plugin import Plugin
 
 
-class Pipeline(PluginInterface):
+class Pipeline(Plugin):
     """eds.pipeline interface."""
 
     interface_name = "eds.pipeline"

@@ -1,7 +1,6 @@
 
 from __future__ import annotations
 from typing import Dict, List
-from eds.interfaces.plugin_interface import PluginInterface
 
 
 class Plugin():
@@ -71,7 +70,3 @@ class Plugin():
             plugins += plugin.children
             plugins.append(plugin)
         return plugins
-
-PluginInterface.register(Plugin)
-
-assert issubclass(Plugin, PluginInterface)
