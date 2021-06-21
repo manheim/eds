@@ -40,5 +40,6 @@ class VcsProvider(PluginInterface):
         """Update a Project."""
         pass
 
-VcsProvider.register(PluginInterface)
-assert issubclass(PluginInterface, VcsProvider)
+PluginInterface.register(VcsProvider)
+assert issubclass(VcsProvider, PluginInterface)
+assert isinstance(VcsProvider(), PluginInterface)

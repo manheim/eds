@@ -20,5 +20,6 @@ class Config(PluginInterface):
         """Generate the config."""
         pass
 
-Config.register(PluginInterface)
-assert issubclass(PluginInterface, Config)
+PluginInterface.register(Config)
+assert issubclass(Config, PluginInterface)
+assert isinstance(Config(), PluginInterface)

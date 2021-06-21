@@ -14,5 +14,6 @@ class Task(PluginInterface):
         "properties": {}
     }
 
-Task.register(PluginInterface)
-assert issubclass(PluginInterface, Task)
+PluginInterface.register(Task)
+assert issubclass(Task, PluginInterface)
+assert isinstance(Task(), PluginInterface)

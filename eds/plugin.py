@@ -74,3 +74,4 @@ class Plugin():
 
 PluginInterface.register(Plugin)
 assert issubclass(Plugin, PluginInterface)
+assert isintance(Plugin(), PluginInterface)

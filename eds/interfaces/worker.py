@@ -25,5 +25,6 @@ class Worker(PluginInterface):
         """
         pass
 
-Worker.register(PluginInterface)
-assert issubclass(PluginInterface, Worker)
+PluginInterface.register(Worker)
+assert issubclass(Worker, PluginInterface)
+assert isinstance(Worker(), PluginInterface)
