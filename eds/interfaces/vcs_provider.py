@@ -40,21 +40,3 @@ class VcsProvider(PluginInterface):
     def update_project(self) -> None:
         """Update a Project."""
         pass
-
-class GithubEnterpriseProvider(VcsProvider):
-    def parse_event(self) -> Dict:
-        return super().parse_event()
-
-    def get_files(self) -> Dict:
-        return super().get_files()
-
-    def create_project(self) -> None:
-        return super().create_project()
-
-    def delete_project(self) -> None:
-        return super().delete_project()
-
-    def update_project(self) -> None:
-        return super().update_project()
-
-VcsProvider.register(GithubEnterpriseProvider)
