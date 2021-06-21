@@ -19,3 +19,6 @@ class Config(PluginInterface):
     def generate(self) -> None:
         """Generate the config."""
         pass
+
+Config.register(PluginInterface)
+assert issubclass(PluginInterface, Config)

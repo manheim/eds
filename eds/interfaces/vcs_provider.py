@@ -1,5 +1,5 @@
 from typing import Dict
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
 from eds.interfaces.plugin_interface import PluginInterface
 
 class VcsProvider(PluginInterface):
@@ -39,3 +39,6 @@ class VcsProvider(PluginInterface):
     def update_project(self) -> None:
         """Update a Project."""
         pass
+
+VcsProvider.register(PluginInterface)
+assert issubclass(PluginInterface, VcsProvider)

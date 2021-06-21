@@ -19,3 +19,6 @@ class Pipeline(PluginInterface):
     def build(self) -> None:
         """Build the pipeline configuration."""
         pass
+
+Pipeline.register(PluginInterface)
+assert issubclass(PluginInterface, Pipeline)

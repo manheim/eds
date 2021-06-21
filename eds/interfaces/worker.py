@@ -1,4 +1,4 @@
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
 from eds.interfaces.plugin_interface import PluginInterface
 
 
@@ -24,3 +24,6 @@ class Worker(PluginInterface):
             plugin_versions (bool): List of EDS plugin versions as pip install requirements.
         """
         pass
+
+Worker.register(PluginInterface)
+assert issubclass(PluginInterface, Worker)

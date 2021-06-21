@@ -13,3 +13,6 @@ class Task(PluginInterface):
         "type": "object",
         "properties": {}
     }
+
+Task.register(PluginInterface)
+assert issubclass(PluginInterface, Task)
