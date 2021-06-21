@@ -2,6 +2,7 @@ from typing import Dict
 
 from eds.interfaces.plugin import Plugin
 
+
 class VcsProvider(Plugin):
     """eds.vcs_provider interface."""
 
