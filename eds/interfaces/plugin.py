@@ -1,9 +1,10 @@
 
 from __future__ import annotations
 from typing import List, Dict
+from abc import ABCMeta
 
 
-class Plugin():
+class Plugin(metaclass=ABCMeta):
     """general plugin interface."""
 
     schema: Dict = {}
