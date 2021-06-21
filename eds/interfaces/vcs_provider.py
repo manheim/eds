@@ -42,4 +42,4 @@ class VcsProvider(PluginInterface):
 
 PluginInterface.register(VcsProvider)
 assert issubclass(VcsProvider, PluginInterface)
-assert isinstance(VcsProvider(), PluginInterface)
+#assert isinstance(VcsProvider(), PluginInterface)
