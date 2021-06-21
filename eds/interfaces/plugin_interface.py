@@ -1,7 +1,6 @@
 from __future__ import annotations
 from typing import List, Dict
 from abc import ABCMeta, abstractmethod
-from eds.plugin import Plugin
 
 
 class PluginInterface(metaclass=ABCMeta):
@@ -12,7 +11,7 @@ class PluginInterface(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def children(self) -> List[Plugin]:
+    def children(self) -> List[PluginInterface]:
         """The list of child plugins.
 
         Returns:
