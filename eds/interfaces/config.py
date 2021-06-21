@@ -1,3 +1,4 @@
+from abc import abstractmethod
 
 from eds.interfaces.plugin_interface import PluginInterface
 
@@ -15,6 +16,7 @@ class Config(PluginInterface):
         "properties": {}
     }
 
+    @abstractmethod
     def generate(self) -> None:
         """Generate the config."""
         pass

@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from eds.interfaces.plugin_interface import PluginInterface
 
 
@@ -14,14 +16,17 @@ class PipelineProvider(PluginInterface):
         "properties": {}
     }
 
+    @abstractmethod
     def create_pipeline(self) -> None:
         """Create a pipeline."""
         pass
 
+    @abstractmethod
     def update_pipeline(self) -> None:
         """Update a pipeline."""
         pass
 
+    @abstractmethod
     def delete_pipeline(self) -> None:
         """Delete a pipeline."""
         pass

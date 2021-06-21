@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from eds.interfaces.plugin_interface import PluginInterface
 
 
@@ -14,6 +16,7 @@ class Pipeline(PluginInterface):
         "properties": {}
     }
 
+    @abstractmethod
     def build(self) -> None:
         """Build the pipeline configuration."""
         pass
