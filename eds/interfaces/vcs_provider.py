@@ -25,7 +25,7 @@ class VcsProvider(Plugin):
         Returns:
             List[Plugin]: The list of child plugins.
         """
-        return []
+        pass
 
     @abstractmethod
     def validate(self) -> None:
