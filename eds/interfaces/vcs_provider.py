@@ -1,4 +1,5 @@
 from typing import Dict
+from abc import abstractmethod
 
 from eds.interfaces.plugin import Plugin
 
@@ -15,6 +16,21 @@ class VcsProvider(Plugin):
         "type": "object",
         "properties": {}
     }
+
+    @property
+    @abstractmethod
+    def children(self) -> List[Plugin]:
+        """The list of child plugins.
+
+        Returns:
+            List[Plugin]: The list of child plugins.
+        """
+        return []
+
+    @abstractmethod
+    def validate(self) -> None:
+        """Validate the plugin."""
+        pass
 
     @abstractmethod
     def parse_event(self) -> Dict:
@@ -42,6 +58,18 @@ class VcsProvider(Plugin):
         pass
 
 class GithubProvider(VcsProvider):
+    @property
+    def children(self) -> List[Plugin]:
+        """The list of child plugins.
+
+        Returns:
+            List[Plugin]: The list of child plugins.
+        """
+        return []
+
+    def validate(self) -> None:
+        """Validate the plugin."""
+        pass
     def parse_event(self) -> Dict:
         return super().parse_event()
 
@@ -58,6 +86,20 @@ class GithubProvider(VcsProvider):
         return super().update_project()
 
 class GithubEnterpriseProvider(VcsProvider):
+    
+    @property
+    def children(self) -> List[Plugin]:
+        """The list of child plugins.
+
+        Returns:
+            List[Plugin]: The list of child plugins.
+        """
+        return []
+
+    def validate(self) -> None:
+        """Validate the plugin."""
+        pass
+
     def parse_event(self) -> Dict:
         return super().parse_event()
 
