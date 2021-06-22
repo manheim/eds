@@ -1,6 +1,7 @@
-from typing import Dict
+from typing import List, Dict
 
 from eds.interfaces.vcs_provider import VcsProvider
+from eds.interfaces.plugin import Plugin
 
 
 class GithubEnterpriseProvider(VcsProvider):
