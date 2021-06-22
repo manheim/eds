@@ -5,6 +5,7 @@ from eds.interfaces.plugin import Plugin
 
 
 class GithubProvider(VcsProvider):
+    """Github Provider implementation."""
 
     @property
     def children(self) -> List[Plugin]:
@@ -17,7 +18,7 @@ class GithubProvider(VcsProvider):
 
     def validate(self) -> None:
         """Validate the plugin."""
-        pass
+        return super().validate()
 
     def parse_event(self) -> Dict:
         """Parse webhook event for project url and ref."""
