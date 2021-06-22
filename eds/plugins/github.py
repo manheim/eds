@@ -16,16 +16,20 @@ class GithubProvider(VcsProvider):
     """Github Provider implementation."""
 
     def __init__(
-        self,gh_username: str = None, gh_password: str = None,
+        self, gh_username: str = None, gh_password: str = None,
         token_env_var: str = None, github_enterprise_url: str = None
     ):
         """Login to Github or Github Enterprise."""
         if github_enterprise_url is None:
             # Logging in to github.com
-            self._g = login(username=gh_username, password=gh_password, token=os.getenv(token_env_var, None))
+            self._g: GitHub = login(
+                username=gh_username,
+                password=gh_password,
+                token=os.getenv(token_env_var, None)
+            )
         else:
             # Logging in to github enterprise
-            self._g = enterprise_login(
+            self._g: GitHubEnterprise = enterprise_login(
                 url=github_enterprise_url,
                 username=gh_username,
                 password=gh_password,
