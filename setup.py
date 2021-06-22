@@ -29,7 +29,7 @@ setup(
     install_requires=[
         'click',
         'setuptools',
-        'github3.py==2.0.0'
+        'github3.py>=2.0.0'
     ],
     entry_points={
         'console_scripts': [
