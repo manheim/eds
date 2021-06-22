@@ -1,4 +1,7 @@
+import os
 from typing import List, Dict
+from github3 import enterprise_login
+from github3.github import GitHubEnterprise
 
 from eds.interfaces.vcs_provider import VcsProvider
 from eds.interfaces.plugin import Plugin
@@ -6,6 +9,16 @@ from eds.interfaces.plugin import Plugin
 
 class GithubEnterpriseProvider(VcsProvider):
     """Github Enterprise Provider implementation."""
+
+
+    def __init__ (self, github_url: str, token_var: str):
+        """
+        Login to Github Enterprise using access token
+        """
+        self._ghe: GitHubEnterprise = enterprise_login(
+            url=github_url,
+            token=os.environ[token_var]
+        )
 
     @property
     def children(self) -> List[Plugin]:
@@ -24,7 +37,7 @@ class GithubEnterpriseProvider(VcsProvider):
         """Parse webhook event for project url and ref."""
         return super().parse_event()
 
-    def get_files(self) -> Dict:
+    def get_files(self, org_name: str, repo_name: str) -> Dict:
         """Get project files."""
         return super().get_files()
 
