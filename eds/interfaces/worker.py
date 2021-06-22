@@ -8,8 +8,8 @@ class Worker(Plugin):
 
     schema = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "$id": "eds.tags",
-        "title": "Tags",
+        "$id": "eds.worked",
+        "title": "Worker",
         "type": "object",
         "properties": {}
     }
