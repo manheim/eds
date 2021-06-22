@@ -16,23 +16,22 @@ class GithubProvider(VcsProvider):
     """Github Provider implementation."""
 
     def __init__(
-        self, gh_username: str = None, gh_password: str = None,
-        token_var: str = None, github_enterprise_url: str = None
+        self,gh_username: str = None, gh_password: str = None,
+        token_env_var: str = None, github_enterprise_url: str = None
     ):
-        """Login to Github or Github Enterprise"""
+        """Login to Github or Github Enterprise."""
         if github_enterprise_url is None:
-            print("Logging in to github.com...")
-            self._g: GitHub = login(
+            # Logging in to github.com
+            self._g = login(username=gh_username, password=gh_password, token=os.getenv(token_env_var, None))
+        else:
+            # Logging in to github enterprise
+            self._g = enterprise_login(
+                url=github_enterprise_url,
                 username=gh_username,
                 password=gh_password,
-                token=os.environ[token_var]
+                token=os.getenv(token_env_var, None)
             )
-        else:
-            print(f"Logging in to {github_enterprise_url}...")
-            self._g: GitHubEnterprise = enterprise_login(
-                url=github_enterprise_url,
-                token=os.environ[token_var]
-            )
+
 
     @property
     def children(self) -> List[Plugin]:
