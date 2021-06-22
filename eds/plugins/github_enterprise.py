@@ -10,11 +10,8 @@ from eds.interfaces.plugin import Plugin
 class GithubEnterpriseProvider(VcsProvider):
     """Github Enterprise Provider implementation."""
 
-
-    def __init__ (self, github_url: str, token_var: str):
-        """
-        Login to Github Enterprise using access token
-        """
+    def __init__(self, github_url: str, token_var: str):
+        """Login to Github Enterprise using access token."""
         self._ghe: GitHubEnterprise = enterprise_login(
             url=github_url,
             token=os.environ[token_var]

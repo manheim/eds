@@ -10,18 +10,18 @@ from eds.interfaces.plugin import Plugin
 class GithubProvider(VcsProvider):
     """Github Provider implementation."""
 
-    def __init__ (self, gh_username: str = None,
-        gh_password: str = None, token_var: str = None
+    def __init__(
+        self,
+        gh_username: str = None,
+        gh_password: str = None,
+        token_var: str = None
     ):
-        """
-        Login to public Github using username/password or token
-        """
+        """Login to public Github using username/password or token."""
         self._g: GitHub = login(
             username=gh_username,
             password=gh_password,
             tokan=os.environ[token_var]
         )
-
 
     @property
     def children(self) -> List[Plugin]:
