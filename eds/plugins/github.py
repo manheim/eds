@@ -36,7 +36,6 @@ class GithubProvider(VcsProvider):
                 token=os.getenv(token_env_var, None)
             )
 
-
     @property
     def children(self) -> List[Plugin]:
         """The list of child plugins.
