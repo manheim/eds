@@ -5,7 +5,7 @@ from eds.interfaces.plugin import Plugin
 
 
 class GithubProvider(VcsProvider):
-    
+
     @property
     def children(self) -> List[Plugin]:
         """The list of child plugins.
@@ -18,21 +18,26 @@ class GithubProvider(VcsProvider):
     def validate(self) -> None:
         """Validate the plugin."""
         pass
+
     def parse_event(self) -> Dict:
+        """Parse webhook event for project url and ref."""
         return super().parse_event()
 
     def get_files(self) -> Dict:
+        """Get project files."""
         return super().get_files()
 
     def create_project(self) -> None:
+        """Create a Project."""
         return super().create_project()
 
     def delete_project(self) -> None:
+        """Delete a Project."""
         return super().delete_project()
 
     def update_project(self) -> None:
+        """Update a Project."""
         return super().update_project()
-
 
 
 VcsProvider.register(GithubProvider)
