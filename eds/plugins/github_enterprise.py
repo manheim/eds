@@ -39,7 +39,6 @@ class GithubEnterpriseProvider(VcsProvider):
 
     def get_files(self, owner: str, repo_name: str) -> Dict:
         """Get project files."""
-
         try:
             repo: Repository = self._ghe.repository(owner, repo_name)
             contents = repo.directory_contents('path/to/dir/', return_as=dict)
@@ -51,7 +50,6 @@ class GithubEnterpriseProvider(VcsProvider):
 
     def create_project(self, org_name: str, project_name: str) -> Repository:
         """Create a Project."""
-
         try:
             org: Organization = self._ghe.organization(org_name)
             new_project_repo: Repository = org.create_repository(
@@ -66,7 +64,6 @@ class GithubEnterpriseProvider(VcsProvider):
 
     def delete_project(self, owner: str, repo_name: str) -> bool:
         """Delete a Project."""
-
         try:
             repo: Repository = self._ghe.repository(owner, repo_name)
             repo_deleted = repo.delete()
@@ -87,7 +84,6 @@ class GithubEnterpriseProvider(VcsProvider):
         branch_name: Optional[str] = None
     ) -> bool:
         """Update a Project."""
-
         try:
             repo: Repository = self._ghe.repository(owner, repo_name)
             file_contents: Contents = repo.contents(file_name)
