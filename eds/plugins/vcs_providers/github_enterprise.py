@@ -5,7 +5,7 @@ from eds.interfaces.plugin import Plugin
 
 
 class GithubEnterpriseProvider(VcsProvider):
-   """Github Enterprise Provider implementation."""
+    """Github Enterprise Provider implementation."""
 
     @property
     def children(self) -> List[Plugin]:
