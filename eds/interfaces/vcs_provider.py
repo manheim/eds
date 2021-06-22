@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import List, Dict
 from abc import abstractmethod
 
 from eds.interfaces.plugin import Plugin
