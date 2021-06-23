@@ -3,16 +3,16 @@ from typing import List, Dict, Optional
 
 from github3 import login
 from github3 import enterprise_login
-from github3.exceptions import NotFoundError, ForbiddenError
 from github3.github import GitHub
 from github3.github import GitHubEnterprise
 from github3.orgs import Organization
-from github3.repos.repo import ShortRepository, Repository
+from github3.repos.repo import Repository
 from github3.repos.contents import Contents
 # from github3.repos.branch import Branch
 # from github3.git import CommitTree, Commit, Tree, Hash, Reference
 # from github3.repos.comparison import Comparison
 # from github3.users import User
+# from github3.exceptions import NotFoundError, ForbiddenError
 
 from eds.interfaces.vcs_provider import VcsProvider
 from eds.interfaces.plugin import Plugin
@@ -63,7 +63,8 @@ class GithubProvider(VcsProvider):
         """Get project files."""
         try:
             repo: Repository = self._g.repository(owner, repo_name)
-            contents = repo.directory_contents('path/to/dir/', return_as=dict)
+            print(repo.name)
+            contents = repo.directory_contents('.', return_as=dict)
         except Exception as ex:
             print(f"Exception in get_files: {ex}")
             return None
