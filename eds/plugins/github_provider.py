@@ -49,9 +49,7 @@ class GithubProvider(VcsProvider):
         return super().parse_event()
 
     def get_files(self, owner: str, repo_name: str, path: str = '/', ref: str = 'master') -> Dict[str, str]:
-        """
-        Get project files.
-
+        """Get project files.
         Return the contents of the repository's specified ``ref``, under the
         specified path, as a dict of string key to string file contents.
 
