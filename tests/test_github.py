@@ -8,6 +8,11 @@ from eds.plugins.github_provider import GithubProvider
 
 class TestGithubProvider(object):
 
+    # Assumes you have the following environment vars set:
+    #   GITHUB_PAT: Access token for github.com
+    #   GHE_URL: Github Enterprise URL (ex. https://mygithub.mycorp.com/)
+    #   GHE_PAT: Access token for github enterprise
+
     # Github.com Tests
     def test_get_files(self):
         cls = GithubProvider(token_env_var='GITHUB_PAT')
