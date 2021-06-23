@@ -59,12 +59,12 @@ class GithubProvider(VcsProvider):
         """Parse webhook event for project url and ref."""
         return super().parse_event()
 
-    def get_files(self, owner: str, repo_name: str) -> Dict:
+    def get_files(self, owner: str, repo_name: str, directory_path: str = '.') -> Dict:
         """Get project files."""
         try:
             repo: Repository = self._g.repository(owner, repo_name)
             print(repo.name)
-            contents = repo.directory_contents('.', return_as=dict)
+            contents = repo.directory_contents(directory_path, return_as=dict)
         except Exception as ex:
             print(f"Exception in get_files: {ex}")
             return None
