@@ -1,10 +1,8 @@
 import os
 from typing import List, Dict, Optional
 
-from github3 import login
-from github3 import enterprise_login
-from github3.github import GitHub
-from github3.github import GitHubEnterprise
+from github3 import login, enterprise_login
+from github3.github import GitHub, GitHubEnterprise
 from github3.orgs import Organization
 from github3.repos.repo import Repository
 from github3.repos.contents import Contents
@@ -21,26 +19,17 @@ from eds.interfaces.plugin import Plugin
 class GithubProvider(VcsProvider):
     """Github Provider implementation."""
 
-    def __init__(
-        self, gh_username: str = None, gh_password: str = None,
-        token_env_var: str = None, github_enterprise_url: str = None
-    ):
+    def __init__(self, token_env_var: str = None, github_enterprise_url: str = None):
         """Login to Github or Github Enterprise."""
+        token: str = os.environ.get(token_env_var)
+        if token == '' or token is None:
+            raise RuntimeError(
+                f'ERROR: You must export the {token_env_var} environment variable.'
+            )
         if github_enterprise_url is None:
-            # Logging in to github.com
-            self._g: GitHub = login(
-                username=gh_username,
-                password=gh_password,
-                token=os.getenv(token_env_var, None)
-            )
+            self._g: GitHub = login(token=token)
         else:
-            # Logging in to github enterprise
-            self._g: GitHubEnterprise = enterprise_login(
-                url=github_enterprise_url,
-                username=gh_username,
-                password=gh_password,
-                token=os.getenv(token_env_var, None)
-            )
+            self._g: GitHubEnterprise = enterprise_login(url=github_enterprise_url, token=token)
 
     @property
     def children(self) -> List[Plugin]:
@@ -59,16 +48,40 @@ class GithubProvider(VcsProvider):
         """Parse webhook event for project url and ref."""
         return super().parse_event()
 
-    def get_files(self, owner: str, repo_name: str, directory_path: str = '.') -> Dict:
-        """Get project files."""
+    def get_files(self, owner: str, repo_name: str, path: str = '/', ref: str = 'master') -> Dict[str, str]:
+        """
+        Get project files.
+
+        Return the contents of the repository's specified ``ref``, under the
+        specified path, as a dict of string key to string file contents.
+
+        :param owner: owner of the repo
+        :param repo_name: name of the repo
+        :param path: path under the repo to get
+        :param ref: ref to get contents at
+        :return: repository contents
+        """
+
+        result: Dict[str, str] = {}
+
         try:
             repo: Repository = self._g.repository(owner, repo_name)
-            contents = repo.directory_contents(directory_path, return_as=dict)
+            content: Dict[str, Contents] = repo.directory_contents(path, ref=ref, return_as=dict)
+
+            for fname in content.keys():
+                if content[fname].type == 'dir':
+                    for k, v in self.directory_contents(
+                        content[fname].path, ref=ref
+                    ).items():
+                        result[os.path.join(fname, k).lstrip('/')] = v
+                else:
+                    content[fname].refresh()
+                    result[fname] = content[fname].decoded.decode('utf-8')
+
         except Exception as ex:
             print(f"Exception in get_files: {ex}")
-            return None
 
-        return contents
+        return result
 
     def create_project(self, org_name: str, project_name: str) -> Repository:
         """Create a Project."""
