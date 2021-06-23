@@ -20,8 +20,6 @@ class GithubProvider(VcsProvider):
         token_env_var: str = None, github_enterprise_url: str = None
     ):
         """Login to Github or Github Enterprise."""
-        print("hello")
-        print(os.getenv(token_env_var))
         if github_enterprise_url is None:
             # Logging in to github.com
             self._g: GitHub = login(
@@ -30,7 +28,6 @@ class GithubProvider(VcsProvider):
                 token=os.getenv(token_env_var, None)
             )
         else:
-            print(github_enterprise_url)
             # Logging in to github enterprise
             self._g: GitHubEnterprise = enterprise_login(
                 url=github_enterprise_url,
