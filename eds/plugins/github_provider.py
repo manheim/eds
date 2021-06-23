@@ -63,7 +63,6 @@ class GithubProvider(VcsProvider):
         """Get project files."""
         try:
             repo: Repository = self._g.repository(owner, repo_name)
-            print(repo.name)
             contents = repo.directory_contents(directory_path, return_as=dict)
         except Exception as ex:
             print(f"Exception in get_files: {ex}")
