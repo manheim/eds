@@ -82,7 +82,12 @@ class GithubProvider(VcsProvider):
         return result
 
     def create_project(self, org_name: str, project_name: str) -> Repository:
-        """Create a Project."""
+        """Create a Project.
+
+        :param org_name: Organization to create repo in
+        :param project_name: name of the repo to create
+        :return: newly created Repository object
+        """
         try:
             org: Organization = self._g.organization(org_name)
             new_project_repo: Repository = org.create_repository(
@@ -96,7 +101,12 @@ class GithubProvider(VcsProvider):
         return new_project_repo
 
     def delete_project(self, owner: str, repo_name: str) -> bool:
-        """Delete a Project."""
+        """Delete a Project.
+
+        :param owner: owner of repo
+        :param repo_name: name of the repo to delete
+        :return: True if succefully deleted repo, False otherwise
+        """
         try:
             repo: Repository = self._g.repository(owner, repo_name)
             repo_deleted = repo.delete()
@@ -116,7 +126,16 @@ class GithubProvider(VcsProvider):
         commit_message: str = "Updating EDS project",
         branch_name: Optional[str] = None
     ) -> bool:
-        """Update a Project."""
+        """Update a Project.
+
+        :param owner: owner of repo
+        :param repo_name: name of the repo to delete
+        :param file_name: file name to update
+        :param new_contents: new contents for the file
+        :param commit_message: github commit message
+        :param branch_name: Name of branch to update file in
+        :return: True if succefully updated repo, False otherwise
+        """
         try:
             repo: Repository = self._g.repository(owner, repo_name)
             file_contents: Contents = repo.contents(file_name)
