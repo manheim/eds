@@ -180,3 +180,19 @@ class TestUpdateProject(GithubProviderTester):
             call.contents('myfile.txt'),
             call.contents().update(message='Updating EDS project', content=b'updated content', branch=None)
         ]
+    
+    def test_update_project_with_branch(self):
+        def se_contents(path, **kwargs):
+            return {
+                'myfile.txt': Mock(spec_set=Contents)
+            }
+
+        self.mock_repo.contents('myfile.txt').side_effect = se_contents
+        res = self.cls.update_project(owner='foo', repo_name='bar2', file_name='myfile.txt', new_contents='updated content', branch_name="develop_br")
+
+        assert res is True
+        assert self.mock_repo.mock_calls == [
+            call.contents('myfile.txt'),
+            call.contents('myfile.txt'),
+            call.contents().update(message='Updating EDS project', content=b'updated content', branch="develop_br")
+        ]
