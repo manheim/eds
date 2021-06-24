@@ -3,6 +3,7 @@ import pytest
 
 from github3.github import GitHub, GitHubEnterprise
 from github3.repos.contents import Contents
+from github3.repos.repo import Repository
 from unittest.mock import Mock, patch, call, PropertyMock
 
 from eds.plugins.github_provider import GithubProvider
@@ -19,6 +20,7 @@ class GithubProviderTester(object):
         self.mock_org = Mock(login='foo')
         self.mock_g.organization.return_value = self.mock_org
         self.mock_repo = Mock(full_name='foo/bar', id=12345)
+        self.mock_repo2 = Mock(full_name='foo/bar2', id=6789)
         self.mock_g.repository.return_value = self.mock_repo
         with patch(f'{pb}.__init__') as m_init:
             m_init.return_value = None
@@ -121,3 +123,55 @@ class TestGetFiles(GithubProviderTester):
             call.directory_contents('subdir', ref='master', return_as=dict)
         ]
 
+class TestCreateProject(GithubProviderTester):
+
+    def test_create_project(self):
+        self.mock_org.create_repository.return_value = self.mock_repo2
+        res = self.cls.create_project(org_name='myorg', project_name='new_proj')
+
+        assert res is not None
+        assert self.mock_org.mock_calls == [
+            call.create_repository(name="new_proj", descritption="EDS project for new_proj")
+        ]
+
+    def test_create_project_exception(self):
+        self.mock_repo.create_repository.return_value = self.mock_repo2
+
+        with pytest.raises(Exception):
+            res = self.cls.create_project(owner='foo', repo_name='bar')
+
+        assert self.mock_org.mock_calls == []
+        assert self.mock_repo.mock_calls == []
+
+class TestDeleteProject(GithubProviderTester):
+
+    def test_delete_project(self):
+        self.mock_repo.delete.return_value = True
+        res = self.cls.delete_project(owner='foo', repo_name='bar')
+
+        assert res is True
+        assert self.mock_repo.mock_calls == [
+            call.delete()
+        ]
+
+    def test_delete_project_failure(self):
+        self.mock_repo.delete.return_value = False
+        res = self.cls.delete_project(owner='foo', repo_name='bar')
+
+        assert res is False
+        assert self.mock_repo.mock_calls == [
+            call.delete()
+        ]
+    
+class TestUpdateProject(GithubProviderTester):
+
+    def test_update_project(self):
+        self.mock_repo.contents('myfile.txt').side_effect = {'myfile.txt': 'filecontents'}
+        res = self.cls.update_project(owner='foo', repo_name='bar', file_name='myfile.txt', new_contents='updates')
+
+        assert res is True
+        assert self.mock_repo.mock_calls == [
+            call.contents('myfile.txt'),
+            call.contents('myfile.txt'),
+            call.contents().update(message='Updating EDS project', content=b'updates', branch=None)
+        ]

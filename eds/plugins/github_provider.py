@@ -95,6 +95,7 @@ class GithubProvider(VcsProvider):
         :param repo_name: name of the repo to delete
         :return: True if succefully deleted repo, False otherwise
         """
+        repo_deleted = False
         try:
             repo: Repository = self._g.repository(owner, repo_name)
             repo_deleted = repo.delete()
