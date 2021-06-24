@@ -60,12 +60,12 @@ class GithubProvider(VcsProvider):
         :param ref: ref to get contents at
         :return: repository contents
         """
-
         try:
             repo: Repository = self._g.repository(owner, repo_name)
             contents: Dict[str, Contents] = repo.directory_contents(path, ref=ref, return_as=dict)
         except Exception as ex:
             print(f"Exception in get_files: {ex}")
+            return None
 
         return contents
 
