@@ -166,12 +166,17 @@ class TestDeleteProject(GithubProviderTester):
 class TestUpdateProject(GithubProviderTester):
 
     def test_update_project(self):
-        self.mock_repo.contents('myfile.txt').side_effect = {'myfile.txt': 'filecontents'}
-        res = self.cls.update_project(owner='foo', repo_name='bar', file_name='myfile.txt', new_contents='updates')
+        def se_contents(path, **kwargs):
+            return {
+                'myfile.txt': Mock(spec_set=Contents)
+            }
+
+        self.mock_repo.contents('myfile.txt').side_effect = se_contents
+        res = self.cls.update_project(owner='foo', repo_name='bar2', file_name='myfile.txt', new_contents='updated content')
 
         assert res is True
         assert self.mock_repo.mock_calls == [
             call.contents('myfile.txt'),
             call.contents('myfile.txt'),
-            call.contents().update(message='Updating EDS project', content=b'updates', branch=None)
+            call.contents().update(message='Updating EDS project', content=b'updated content', branch=None)
         ]
