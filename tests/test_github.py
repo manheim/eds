@@ -2,6 +2,7 @@ from typing import Dict
 import pytest
 
 from github3.github import GitHub, GitHubEnterprise
+from github3.repos.contents import Contents
 from unittest.mock import Mock, patch, call, PropertyMock
 
 from eds.plugins.github_provider import GithubProvider
@@ -88,21 +89,35 @@ class TestGetFiles(GithubProviderTester):
     def test_get_files(self):
         def se_contents(path, **kwargs):
             return {
-                'baz': Mock(
-                    decoded='bazContent'.encode('utf-8'), type='file'
-                ),
-                'blarg': Mock(
-                    decoded='blargContent'.encode('utf-8'), type='file'
-                ),
+                'baz': Mock(spec_set=Contents),
+                'blarg': Mock(spec_set=Contents)
             }
 
         self.mock_repo.directory_contents.side_effect = se_contents
         res = self.cls.get_files(owner='foo', repo_name='bar')
-        assert res == {
-            'baz': 'bazContent',
-            'blarg': 'blargContent'
-        }
+        assert res is not None
+        assert isinstance(res, Dict)
+        assert isinstance(res['baz'], Contents)
+        assert isinstance(res['blarg'], Contents)
         assert self.mock_repo.mock_calls == [
             call.directory_contents('/', ref='master', return_as=dict)
+        ]
+
+    def test_get_files_with_path(self):
+        def se_contents(path, **kwargs):
+            return {
+                'bar': Mock(spec_set=Contents),
+                'foo': Mock(spec_set=Contents)
+            }
+
+        self.mock_repo.directory_contents.side_effect = se_contents
+        res = self.cls.get_files(owner='foo', repo_name='bar', path='subdir')
+
+        assert res is not None
+        assert isinstance(res, Dict)
+        assert isinstance(res['bar'], Contents)
+        assert isinstance(res['foo'], Contents)
+        assert self.mock_repo.mock_calls == [
+            call.directory_contents('subdir', ref='master', return_as=dict)
         ]
 

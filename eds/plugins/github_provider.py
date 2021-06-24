@@ -48,7 +48,7 @@ class GithubProvider(VcsProvider):
         """Parse webhook event for project url and ref."""
         return super().parse_event()
 
-    def get_files(self, owner: str, repo_name: str, path: str = '/', ref: str = 'master') -> Dict[str, str]:
+    def get_files(self, owner: str, repo_name: str, path: str = '/', ref: str = 'master') -> Dict[str, Contents]:
         """Get project files.
 
         Return the contents of the repository's specified ``ref``, under the
@@ -60,26 +60,14 @@ class GithubProvider(VcsProvider):
         :param ref: ref to get contents at
         :return: repository contents
         """
-        result: Dict[str, str] = {}
 
         try:
             repo: Repository = self._g.repository(owner, repo_name)
-            content: Dict[str, Contents] = repo.directory_contents(path, ref=ref, return_as=dict)
-
-            for fname in content.keys():
-                if content[fname].type == 'dir':
-                    for k, v in self.directory_contents(
-                        content[fname].path, ref=ref
-                    ).items():
-                        result[os.path.join(fname, k).lstrip('/')] = v
-                else:
-                    content[fname].refresh()
-                    result[fname] = content[fname].decoded.decode('utf-8')
-
+            contents: Dict[str, Contents] = repo.directory_contents(path, ref=ref, return_as=dict)
         except Exception as ex:
             print(f"Exception in get_files: {ex}")
 
-        return result
+        return contents
 
     def create_project(self, org_name: str, project_name: str) -> Repository:
         """Create a Project.
