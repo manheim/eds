@@ -10,13 +10,40 @@ class Plugin():
     """json schema for plugin properties"""
 
     @property
+    def id(self) -> str:
+        """The plugin id.
+
+        Returns:
+            str: The plugin id.
+        """
+        pass
+
+    @property
+    def yaml(self) -> Dict:
+        """The plugin yaml.
+
+        Returns:
+            Dict: The plugin yaml.
+        """
+        pass
+
+    @property
     def children(self) -> List[Plugin]:
         """The list of child plugins.
 
         Returns:
             List[Plugin]: The list of child plugins.
         """
-        return []
+        pass
+
+    @property
+    def descendants(self) -> List[Plugin]:
+        """The list of descendant plugins.
+
+        Returns:
+            List[Plugin]: The list of descendant plugins.
+        """
+        pass
 
     def validate(self) -> None:
         """Validate the plugin."""
