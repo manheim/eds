@@ -2,8 +2,12 @@ import pytest
 from eds.event import Event
 from eds.exception import DuplicateIncludeError
 from eds import project
-from eds.plugin import Plugin
+from eds.plugin import BasePlugin
 from eds.project import Project
+
+
+class SomePlugin(BasePlugin):
+    pass
 
 
 eds_yml_grandparent = {
@@ -81,7 +85,7 @@ eds_yml_child = {
 
 def _setup(monkeypatch):
     monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
-    monkeypatch.setattr(project, 'get_plugin', lambda group, name: Plugin)
+    monkeypatch.setattr(project, 'get_plugin', lambda group, name: SomePlugin)
     event = Event(True, True, '/child', 'project', 'project==1.0')
     return Project(event)
 
@@ -130,7 +134,7 @@ def test_property_inheritance(monkeypatch):
 def test_plugins_property(monkeypatch):
     p = _setup(monkeypatch)
     for plugin in p.plugins:
-        assert type(plugin).__name__ == 'Plugin'
+        assert type(plugin).__name__ == 'SomePlugin'
 
 
 def test_plugin_versions_property(monkeypatch):
