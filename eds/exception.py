@@ -12,7 +12,15 @@ class PluginNameNotFoundError(EdsError):
 
 
 class PluginNameMismatchError(EdsError):
-    """Raised when a plugin name does not match the 'name' attribute of the object."""
+    """Raised when a plugin name does not match the 'plugin_name' attribute of the object."""
+
+
+class UnknownPluginIntefaceError(EdsError):
+    """Raised when a plugin group or interface is unknown."""
+
+
+class PluginInterfaceNotImplementedError(EdsError):
+    """Raised when a plugin does not implement the expected interface."""
 
 
 class DuplicatePluginError(EdsError):
