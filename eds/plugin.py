@@ -4,7 +4,7 @@ from typing import Dict, List
 from eds.interfaces.plugin import Plugin
 
 
-class BasePlugin():
+class BasePlugin(Plugin):
     """Abstract Base class for EDS plugins."""
 
     schema: Dict = {}
