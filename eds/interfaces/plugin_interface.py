@@ -3,7 +3,7 @@ from typing import List, Dict
 from abc import ABC, abstractmethod
 
 
-class PluginInterface(ABC):
+class Plugin(ABC):
     """general plugin interface."""
 
     schema: Dict = {}
@@ -11,7 +11,7 @@ class PluginInterface(ABC):
 
     @property
     @abstractmethod
-    def children(self) -> List[PluginInterface]:
+    def children(self) -> List[Plugin]:
         """The list of child plugins.
 
         Returns:

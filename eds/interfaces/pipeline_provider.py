@@ -1,8 +1,8 @@
 from abc import abstractmethod
-from eds.interfaces.plugin_interface import PluginInterface
+from eds.interfaces.plugin import Plugin
 
 
-class PipelineProvider(PluginInterface):
+class PipelineProvider(Plugin):
     """eds.pipeline_provider interface."""
 
     interface_name = "eds.pipeline_provider"

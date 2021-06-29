@@ -1,8 +1,8 @@
 from abc import abstractmethod
-from eds.interfaces.plugin_interface import PluginInterface
+from eds.interfaces.plugin import Plugin
 
 
-class Worker(PluginInterface):
+class Worker(Plugin):
     """eds.worker interface."""
 
     interface_name = "eds.worker"

@@ -6,7 +6,7 @@ from typing import Dict, List
 from eds.event import Event
 from eds.extend import get_plugin
 from eds.exception import DuplicateIncludeError
-from eds.plugin import Plugin
+from eds.interfaces.plugin import Plugin
 
 
 EDS_YML_FILE: str = 'eds.yml'

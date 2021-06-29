@@ -6,7 +6,7 @@ from typing import Dict, Iterator
 from eds.exception import (PluginNameNotFoundError, NoPluginsFoundError,
                            DuplicatePluginError, PluginNameMismatchError,
                            PluginNoNameAttributeError)
-from eds.plugin import Plugin
+from eds.interfaces.plugin import Plugin
 
 
 def _iter_entry_points(group: str, name: str = None, project: str = None) -> Iterator[Plugin]:
