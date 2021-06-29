@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 from typing import Dict, List
 from eds.interfaces.plugin import Plugin
@@ -8,11 +9,13 @@ class BasePlugin(Plugin):
 
     schema: Dict = {}
     """json schema for plugin properties.
+
     An abstract attribute implemented by specific plugin classes.
     """
 
     def __init__(self, yaml: Dict):
         """Plugin Consructor.
+
         Args:
             yaml (Dict): Plugin yaml dict.
         """
@@ -32,6 +35,7 @@ class BasePlugin(Plugin):
     @property
     def id(self) -> str:
         """The plugin id.
+
         Returns:
             str: The plugin id.
         """
@@ -40,6 +44,7 @@ class BasePlugin(Plugin):
     @property
     def yaml(self) -> Dict:
         """The plugin yaml.
+
         Returns:
             Dict: The plugin yaml.
         """
@@ -48,6 +53,7 @@ class BasePlugin(Plugin):
     @property
     def children(self) -> List[Plugin]:
         """The list of child plugins.
+
         Returns:
             List[Plugin]: The list of child plugins.
         """
@@ -56,6 +62,7 @@ class BasePlugin(Plugin):
     @property
     def descendants(self) -> List[Plugin]:
         """The list of descendant plugins.
+
         Returns:
             List[Plugin]: The list of descendant plugins.
         """
