@@ -40,5 +40,3 @@ class VcsProvider(PluginInterface):
     def update_project(self) -> None:
         """Update a Project."""
         pass
-
-
