@@ -13,8 +13,3 @@ class Tags(PluginInterface):
         "type": "object",
         "properties": {}
     }
-
-
-PluginInterface.register(Tags)
-assert issubclass(Tags, PluginInterface)
-assert isinstance(Tags(), PluginInterface)

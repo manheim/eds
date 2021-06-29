@@ -29,8 +29,3 @@ class PipelineProvider(PluginInterface):
     def delete_pipeline(self) -> None:
         """Delete a pipeline."""
         pass
-
-
-PluginInterface.register(PipelineProvider)
-assert issubclass(PipelineProvider, PluginInterface)
-assert isinstance(PipelineProvider(), PluginInterface)
