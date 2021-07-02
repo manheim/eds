@@ -21,4 +21,4 @@ class Worker(Plugin):
             eds_version (bool): EDS version as pip install requirement.
             plugin_versions (bool): List of EDS plugin versions as pip install requirements.
         """
-        pass
+        raise NotImplementedError()

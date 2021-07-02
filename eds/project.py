@@ -6,7 +6,8 @@ from typing import Dict, List
 from eds.event import Event
 from eds.extend import get_plugin
 from eds.exception import DuplicateIncludeError
-from eds.plugin import Plugin
+from eds.interfaces.plugin import Plugin
+from eds.interfaces.pipeline import Pipeline
 
 
 EDS_YML_FILE: str = 'eds.yml'
@@ -110,7 +111,7 @@ class Project:
         return [p.yaml['version'] for p in self._plugins if not p.overridden]
 
     @property
-    def pipelines(self) -> List[Plugin]:
+    def pipelines(self) -> List[Pipeline]:
         """The list of discovered pipelines, excluding overridden.
 
         Returns:

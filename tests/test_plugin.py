@@ -1,18 +1,18 @@
-from eds.plugin import Plugin
+from eds.plugin import BasePlugin
 
 
-class PluginChild(Plugin):
+class PluginChild(BasePlugin):
     pass
 
 
-class PluginParent(Plugin):
+class PluginParent(BasePlugin):
 
     @property
     def children(self):
         return [PluginChild({})]
 
 
-class PluginGrandParent(Plugin):
+class PluginGrandParent(BasePlugin):
 
     @property
     def children(self):
@@ -27,10 +27,10 @@ def test_get_child_plugins():
 
 
 def test_id_property():
-    p = Plugin({'id': 'my_id'})
+    p = PluginChild({'id': 'my_id'})
     assert p.id == 'my_id'
 
 
 def test_yaml_property():
-    p = Plugin({'some': 'yaml'})
+    p = PluginChild({'some': 'yaml'})
     assert p.yaml == {'some': 'yaml'}

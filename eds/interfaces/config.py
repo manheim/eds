@@ -17,4 +17,4 @@ class Config(Plugin):
 
     def generate(self) -> None:
         """Generate the config."""
-        pass
+        raise NotImplementedError()

@@ -1,10 +1,11 @@
 
 from __future__ import annotations
 from typing import Dict, List
+from eds.interfaces.plugin import Plugin
 
 
-class Plugin():
-    """Base class for EDS plugins."""
+class BasePlugin(Plugin):
+    """Abstract Base class for EDS plugins."""
 
     schema: Dict = {}
     """json schema for plugin properties.
@@ -13,7 +14,7 @@ class Plugin():
     """
 
     def __init__(self, yaml: Dict):
-        """Plugin Consructor.
+        """Base Plugin Consructor.
 
         Args:
             yaml (Dict): Plugin yaml dict.
@@ -24,7 +25,7 @@ class Plugin():
         self.overridden = False
 
     def _validate_schema(self) -> None:
-        """Validate against the schema in `Plugin.schema`."""
+        """Validate against the schema in `BasePlugin.schema`."""
         pass
 
     def validate(self) -> None:
