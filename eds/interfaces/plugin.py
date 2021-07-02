@@ -10,6 +10,7 @@ class Plugin(ABC):
     """json schema for plugin properties"""
 
     @property
+    @abstractmethod
     def id(self) -> str:
         """The plugin id.
 
@@ -19,6 +20,7 @@ class Plugin(ABC):
         raise NotImplementedError()
 
     @property
+    @abstractmethod
     def yaml(self) -> Dict:
         """The plugin yaml.
 
@@ -28,6 +30,7 @@ class Plugin(ABC):
         raise NotImplementedError()
 
     @property
+    @abstractmethod
     def children(self) -> List[Plugin]:
         """The list of child plugins.
 
@@ -37,6 +40,7 @@ class Plugin(ABC):
         raise NotImplementedError()
 
     @property
+    @abstractmethod
     def descendants(self) -> List[Plugin]:
         """The list of descendant plugins.
 
