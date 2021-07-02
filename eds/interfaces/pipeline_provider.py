@@ -16,12 +16,12 @@ class PipelineProvider(Plugin):
 
     def create_pipeline(self) -> None:
         """Create a pipeline."""
-        pass
+        raise NotImplementedError()
 
     def update_pipeline(self) -> None:
         """Update a pipeline."""
-        pass
+        raise NotImplementedError()
 
     def delete_pipeline(self) -> None:
         """Delete a pipeline."""
-        pass
+        raise NotImplementedError()

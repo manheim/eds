@@ -18,20 +18,20 @@ class VcsProvider(Plugin):
 
     def parse_event(self) -> Dict:
         """Parse webhook event for project url and ref."""
-        pass
+        raise NotImplementedError()
 
     def get_files(self) -> Dict:
         """Get project files."""
-        pass
+        raise NotImplementedError()
 
     def create_project(self) -> None:
         """Create a Project."""
-        pass
+        raise NotImplementedError()
 
     def delete_project(self) -> None:
         """Delete a Project."""
-        pass
+        raise NotImplementedError()
 
     def update_project(self) -> None:
         """Update a Project."""
-        pass
+        raise NotImplementedError()

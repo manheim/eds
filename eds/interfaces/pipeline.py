@@ -16,4 +16,4 @@ class Pipeline(Plugin):
 
     def build(self) -> None:
         """Build the pipeline configuration."""
-        pass
+        raise NotImplementedError()

@@ -16,7 +16,7 @@ class Plugin():
         Returns:
             str: The plugin id.
         """
-        pass
+        raise NotImplementedError()
 
     @property
     def yaml(self) -> Dict:
@@ -25,7 +25,7 @@ class Plugin():
         Returns:
             Dict: The plugin yaml.
         """
-        pass
+        raise NotImplementedError()
 
     @property
     def children(self) -> List[Plugin]:
@@ -34,7 +34,7 @@ class Plugin():
         Returns:
             List[Plugin]: The list of child plugins.
         """
-        pass
+        raise NotImplementedError()
 
     @property
     def descendants(self) -> List[Plugin]:
@@ -43,8 +43,8 @@ class Plugin():
         Returns:
             List[Plugin]: The list of descendant plugins.
         """
-        pass
+        raise NotImplementedError()
 
     def validate(self) -> None:
         """Validate the plugin."""
-        pass
+        raise NotImplementedError()
