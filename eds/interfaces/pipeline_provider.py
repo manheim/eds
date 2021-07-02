@@ -18,14 +18,14 @@ class PipelineProvider(Plugin):
     @abstractmethod
     def create_pipeline(self) -> None:
         """Create a pipeline."""
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
     def update_pipeline(self) -> None:
         """Update a pipeline."""
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
     def delete_pipeline(self) -> None:
         """Delete a pipeline."""
-        pass
+        raise NotImplementedError()

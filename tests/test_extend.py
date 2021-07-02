@@ -5,18 +5,25 @@ import pytest
 from eds.extend import _get_plugins, get_plugins, get_plugin
 from eds.exception import (PluginNameNotFoundError, NoPluginsFoundError,
                            DuplicatePluginError, PluginNameMismatchError,
-                           PluginNoNameAttributeError)
+                           PluginNoNameAttributeError, PluginInterfaceNotImplementedError,
+                           UnknownPluginIntefaceError)
+from eds.interfaces.config import Config
+from eds.interfaces.pipeline import Pipeline
 
 
-class PluginClass(object):
+class ConfigPlugin(Config):
     plugin_name = 'testname'
 
 
-class PluginClassMismatch(object):
+class PipelinePlugin(Pipeline):
+    plugin_name = 'testname'
+
+
+class ConfigPluginMismatch(Config):
     plugin_name = 'mismatch'
 
 
-class PluginClassNoName(object):
+class ConfigPluginNoName(Config):
     pass
 
 
@@ -35,58 +42,70 @@ def patch_working_set(monkeypatch, plugin_class, no_ep=False, dupe=False):
 
 
 def test_get_plugin(monkeypatch):
-    patch_working_set(monkeypatch, 'PluginClass')
-    p = get_plugin('foo', 'testname')
+    patch_working_set(monkeypatch, 'ConfigPlugin')
+    p = get_plugin('eds.config', 'testname')
     assert p.plugin_name == 'testname'
 
 
 def test_get_plugins(monkeypatch):
-    patch_working_set(monkeypatch, 'PluginClass')
-    plugins = get_plugins('foo')
+    patch_working_set(monkeypatch, 'ConfigPlugin')
+    plugins = get_plugins('eds.config')
     assert len(plugins) == 1
     assert 'testname' in plugins
     assert plugins['testname'].plugin_name == 'testname'
 
 
 def test_get_plugins_matching_project(monkeypatch):
-    patch_working_set(monkeypatch, 'PluginClass')
-    plugins = get_plugins('foo', project='eds')
+    patch_working_set(monkeypatch, 'ConfigPlugin')
+    plugins = get_plugins('eds.config', project='eds')
     assert len(plugins) == 1
     assert 'testname' in plugins
     assert plugins['testname'].plugin_name == 'testname'
 
 
 def test_get_plugins_non_matching_project(monkeypatch):
-    patch_working_set(monkeypatch, 'PluginClass')
+    patch_working_set(monkeypatch, 'ConfigPlugin')
     with pytest.raises(NoPluginsFoundError):
-        get_plugins('foo', project='foo')
+        get_plugins('eds.config', project='foo')
 
 
 def test__get_plugins_mismatch(monkeypatch):
-    patch_working_set(monkeypatch, 'PluginClassMismatch')
+    patch_working_set(monkeypatch, 'ConfigPluginMismatch')
     with pytest.raises(PluginNameMismatchError):
-        _get_plugins('foo', name='testname')
+        _get_plugins('eds.config', name='testname')
 
 
 def test__get_plugins_no_name_attr(monkeypatch):
-    patch_working_set(monkeypatch, 'PluginClassNoName')
+    patch_working_set(monkeypatch, 'ConfigPluginNoName')
     with pytest.raises(PluginNoNameAttributeError):
-        _get_plugins('foo', name='testname')
+        _get_plugins('eds.config', name='testname')
 
 
 def test__get_plugins_name_not_found(monkeypatch):
-    patch_working_set(monkeypatch, 'PluginClass', no_ep=True)
+    patch_working_set(monkeypatch, 'ConfigPlugin', no_ep=True)
     with pytest.raises(PluginNameNotFoundError):
-        _get_plugins('foo', name='testname')
+        _get_plugins('eds.config', name='testname')
 
 
 def test__get_plugins_duplicates(monkeypatch):
-    patch_working_set(monkeypatch, 'PluginClass', dupe=True)
+    patch_working_set(monkeypatch, 'ConfigPlugin', dupe=True)
     with pytest.raises(DuplicatePluginError):
-        _get_plugins('foo', name='testname')
+        _get_plugins('eds.config', name='testname')
 
 
 def test__get_plugins_no_plugins(monkeypatch):
-    patch_working_set(monkeypatch, 'PluginClass', no_ep=True)
+    patch_working_set(monkeypatch, 'ConfigPlugin', no_ep=True)
     with pytest.raises(NoPluginsFoundError):
-        _get_plugins('foo')
+        _get_plugins('eds.config')
+
+
+def test__get_plugins_unknown_interface(monkeypatch):
+    patch_working_set(monkeypatch, 'ConfigPlugin')
+    with pytest.raises(UnknownPluginIntefaceError):
+        _get_plugins('eds.unknown')
+
+
+def test__get_plugins_interface_not_implemented(monkeypatch):
+    patch_working_set(monkeypatch, 'PipelinePlugin')
+    with pytest.raises(PluginInterfaceNotImplementedError):
+        _get_plugins('eds.config')

@@ -10,16 +10,42 @@ class Plugin(ABC):
     """json schema for plugin properties"""
 
     @property
-    @abstractmethod
+    def id(self) -> str:
+        """The plugin id.
+
+        Returns:
+            str: The plugin id.
+        """
+        raise NotImplementedError()
+
+    @property
+    def yaml(self) -> Dict:
+        """The plugin yaml.
+
+        Returns:
+            Dict: The plugin yaml.
+        """
+        raise NotImplementedError()
+
+    @property
     def children(self) -> List[Plugin]:
         """The list of child plugins.
 
         Returns:
             List[Plugin]: The list of child plugins.
         """
-        pass
+        raise NotImplementedError()
+
+    @property
+    def descendants(self) -> List[Plugin]:
+        """The list of descendant plugins.
+
+        Returns:
+            List[Plugin]: The list of descendant plugins.
+        """
+        raise NotImplementedError()
 
     @abstractmethod
     def validate(self) -> None:
         """Validate the plugin."""
-        pass
+        raise NotImplementedError()

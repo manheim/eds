@@ -18,5 +18,4 @@ class Pipeline(Plugin):
     @abstractmethod
     def build(self) -> None:
         """Build the pipeline configuration."""
-        pass
-
+        raise NotImplementedError()
