@@ -1,7 +1,11 @@
 from eds.plugin import BasePlugin
-from eds.interfaces import (Config, PipelineProvider, 
-                            Pipeline, Tags, Task, 
-                            VcsProvider, Worker)
+from eds.interfaces.config import Config
+from eds.interfaces.pipeline_provider import PipelineProvider
+from eds.interfaces.pipeline import Pipeline
+from eds.interfaces.tags import Tags
+from eds.interfaces.task import Task
+from eds.interfaces.vcs_provider import VcsProvider
+from eds.interfaces.worker import Worker
 
 class ConfigPlugin(BasePlugin, Config):
 
