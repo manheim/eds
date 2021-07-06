@@ -64,7 +64,8 @@ class WorkerPlugin(BasePlugin, Worker):
 
 def test_config_interface():
     c = ConfigPlugin({})
-    # assert isinstance(c, Config())
+    assert isinstance(c, Config())
+    assert isinstance(c, BasePlugin())
 
 def test_pipeline_provider_interface():
     c = PipelineProviderPlugin({})
