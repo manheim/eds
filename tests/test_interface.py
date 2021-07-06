@@ -1,3 +1,4 @@
+from typing import Dict
 from eds.plugin import BasePlugin
 from eds.interfaces.config import Config
 from eds.interfaces.pipeline_provider import PipelineProvider
