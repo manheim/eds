@@ -64,28 +64,21 @@ class WorkerPlugin(BasePlugin, Worker):
 
 def test_config_interface():
     c = ConfigPlugin({})
-    assert isinstance(c, BasePlugin({}))
 
 def test_pipeline_provider_interface():
     c = PipelineProviderPlugin({})
-    assert isinstance(c, BasePlugin({}))
 
 def test_pipeline_interface():
     c = PipelinePlugin({})
-    assert isinstance(c, BasePlugin({}))
 
 def test_tags_interface():
     c = TagsPlugin({})
-    assert isinstance(c, BasePlugin({}))
 
 def test_task_interface():
     c = TaskPlugin({})
-    assert isinstance(c, BasePlugin({}))
 
 def test_vcs_provider_interface():
     c = VcsProviderPlugin({})
-    assert isinstance(c, BasePlugin({}))
 
 def test_worker_interface():
     c = WorkerPlugin({})
-    assert isinstance(c, BasePlugin({}))
