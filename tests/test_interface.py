@@ -63,22 +63,22 @@ class WorkerPlugin(BasePlugin, Worker):
 
 
 def test_config_interface():
-    c = ConfigPlugin({})
+    plugin = ConfigPlugin({})
 
 def test_pipeline_provider_interface():
-    c = PipelineProviderPlugin({})
+    plugin = PipelineProviderPlugin({})
 
 def test_pipeline_interface():
-    c = PipelinePlugin({})
+    plugin = PipelinePlugin({})
 
 def test_tags_interface():
-    c = TagsPlugin({})
+    plugin = TagsPlugin({})
 
 def test_task_interface():
-    c = TaskPlugin({})
+    plugin = TaskPlugin({})
 
 def test_vcs_provider_interface():
-    c = VcsProviderPlugin({})
+    plugin = VcsProviderPlugin({})
 
 def test_worker_interface():
-    c = WorkerPlugin({})
+    plugin = WorkerPlugin({})
