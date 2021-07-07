@@ -5,18 +5,12 @@ from github3.repos.contents import Contents
 from github3.repos.repo import Repository
 from unittest.mock import Mock, patch, call, PropertyMock
 
-from eds.plugin import BasePlugin
-from eds.plugins.vcs_provider_github import GithubProvider
+from eds.plugins.vcs_provider_github import GithubProviderPlugin
 
 pbm = 'eds.plugins.vcs_provider_github'
-pb = f'{pbm}.GithubProvider'
+pb = f'{pbm}.GithubProviderPlugin'
 
-class GithubProviderPlugin(BasePlugin, GithubProvider):
-
-    def generate(self) -> None:
-        pass
-
-class GithubProviderTester(object):
+class GithubProviderPluginTester(object):
 
     """Tests for eds.plugins.vcs_provider_github module."""
 
@@ -91,7 +85,7 @@ class TestInit:
         assert m_el.mock_calls == []
         assert mock_ghe.mock_calls == []
     
-class TestGetFiles(GithubProviderTester):
+class TestGetFiles(GithubProviderPluginTester):
 
     def test_get_files(self):
         def se_contents(path, **kwargs):
@@ -128,7 +122,7 @@ class TestGetFiles(GithubProviderTester):
             call.directory_contents('subdir', ref='master', return_as=dict)
         ]
 
-class TestCreateProject(GithubProviderTester):
+class TestCreateProject(GithubProviderPluginTester):
 
     def test_create_project(self):
         self.mock_org.create_repository.return_value = self.mock_repo2
@@ -148,7 +142,7 @@ class TestCreateProject(GithubProviderTester):
         assert self.mock_org.mock_calls == []
         assert self.mock_repo.mock_calls == []
 
-class TestDeleteProject(GithubProviderTester):
+class TestDeleteProject(GithubProviderPluginTester):
 
     def test_delete_project(self):
         self.mock_repo.delete.return_value = True
@@ -168,7 +162,7 @@ class TestDeleteProject(GithubProviderTester):
             call.delete()
         ]
     
-class TestUpdateProject(GithubProviderTester):
+class TestUpdateProject(GithubProviderPluginTester):
 
     def test_update_project(self):
         def se_contents(path, **kwargs):

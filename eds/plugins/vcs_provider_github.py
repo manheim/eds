@@ -12,11 +12,12 @@ from github3.repos.contents import Contents
 # from github3.users import User
 # from github3.exceptions import NotFoundError, ForbiddenError
 
+from eds.plugin import BasePlugin
 from eds.interfaces.vcs_provider import VcsProvider
 from eds.interfaces.plugin import Plugin
 
 
-class GithubProvider(VcsProvider):
+class GithubProviderPlugin(BasePlugin, VcsProvider):
     """eds.plugins.vcs_provider_github Plugin."""
 
     def __init__(self, yaml: Dict):
