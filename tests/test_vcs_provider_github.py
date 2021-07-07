@@ -24,7 +24,7 @@ class GithubProviderTester(object):
         self.mock_g.repository.return_value = self.mock_repo
         with patch(f'{pb}.__init__') as m_init:
             m_init.return_value = None
-            self.cls = GithubProvider(token_env_var='foo')
+            self.cls = GithubProvider({'token_env_var': 'GITHUB_TOKEN'})
         self.cls._g = self.mock_g
 
 class TestInit:
@@ -41,7 +41,7 @@ class TestInit:
 
         with patch(f'{pbm}.login', autospec=True) as m_login:
             m_login.return_value = mock_g
-            cls = GithubProvider(token_env_var='GITHUB_TOKEN')
+            cls = GithubProvider({'token_env_var': 'GITHUB_TOKEN'})
         assert m_login.mock_calls == [
             call(token='myToken')
         ]
