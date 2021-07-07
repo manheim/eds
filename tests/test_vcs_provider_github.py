@@ -1,15 +1,20 @@
 from typing import Dict
 import pytest
-
 from github3.github import GitHub, GitHubEnterprise
 from github3.repos.contents import Contents
 from github3.repos.repo import Repository
 from unittest.mock import Mock, patch, call, PropertyMock
 
+from eds.plugin import BasePlugin
 from eds.plugins.vcs_provider_github import GithubProvider
 
 pbm = 'eds.plugins.vcs_provider_github'
 pb = f'{pbm}.GithubProvider'
+
+class GithubProviderPlugin(BasePlugin, GithubProvider):
+
+    def generate(self) -> None:
+        pass
 
 class GithubProviderTester(object):
 
@@ -24,7 +29,7 @@ class GithubProviderTester(object):
         self.mock_g.repository.return_value = self.mock_repo
         with patch(f'{pb}.__init__') as m_init:
             m_init.return_value = None
-            self.cls = GithubProvider({'token_env_var': 'GITHUB_TOKEN'})
+            self.cls = GithubProviderPlugin({'token_env_var': 'GITHUB_TOKEN'})
         self.cls._g = self.mock_g
 
 class TestInit:
@@ -41,7 +46,7 @@ class TestInit:
 
         with patch(f'{pbm}.login', autospec=True) as m_login:
             m_login.return_value = mock_g
-            cls = GithubProvider({'token_env_var': 'GITHUB_TOKEN'})
+            cls = GithubProviderPlugin({'token_env_var': 'GITHUB_TOKEN'})
         assert m_login.mock_calls == [
             call(token='myToken')
         ]
@@ -58,7 +63,7 @@ class TestInit:
         mock_ghe = Mock(spec_set=GitHubEnterprise)
         with patch(f'{pbm}.enterprise_login', autospec=True) as m_el:
             m_el.return_value = mock_ghe
-            cls = GithubProvider(token_env_var='GHE_TOKEN', github_enterprise_url='https://url.com/')
+            cls = GithubProviderPlugin({"token_env_var": "GHE_TOKEN", "github_enterprise_url": "https://url.com/"})
         assert m_el.mock_calls == [
             call(url='https://url.com/', token='myEnterpriseToken')
         ]
@@ -71,7 +76,7 @@ class TestInit:
         with patch(f'{pbm}.login', autospec=True) as m_login:
             m_login.return_value = mock_g
             with pytest.raises(RuntimeError):
-                GithubProvider(token_env_var='GITHUB_TOKEN')
+                GithubProviderPlugin({"token_env_var": "GITHUB_TOKEN"})
         assert m_login.mock_calls == []
         assert mock_g.mock_calls == []
 
@@ -82,7 +87,7 @@ class TestInit:
         with patch(f'{pbm}.enterprise_login', autospec=True) as m_el:
             m_el.return_value = mock_ghe
             with pytest.raises(RuntimeError):
-                GithubProvider(token_env_var='GITHUB_TOKEN', github_enterprise_url='https://url.com/')
+                GithubProviderPlugin({"token_env_var": "GITHUB_TOKEN", "github_enterprise_url": "https://url.com/"})
         assert m_el.mock_calls == []
         assert mock_ghe.mock_calls == []
     
