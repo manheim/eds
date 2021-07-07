@@ -36,7 +36,7 @@ class GithubProvider(VcsProvider):
         """Parse webhook event for project url and ref."""
 
         # parse project url and sha from the webhook payload.
-        return super().parse_event()
+        return {}
 
     def get_files(self, owner: str, repo_name: str, path: str = '/', ref: str = 'master') -> Dict[str, Contents]:
         """Get project files.

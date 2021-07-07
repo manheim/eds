@@ -6,14 +6,14 @@ from github3.repos.contents import Contents
 from github3.repos.repo import Repository
 from unittest.mock import Mock, patch, call, PropertyMock
 
-from eds.plugins.github_provider import GithubProvider
+from eds.plugins.vcs_provider_github import GithubProvider
 
-pbm = 'eds.plugins.github_provider'
+pbm = 'eds.plugins.vcs_provider_github'
 pb = f'{pbm}.GithubProvider'
 
 class GithubProviderTester(object):
 
-    """Tests for eds.plugins.github_provider module."""
+    """Tests for eds.plugins.vcs_provider_github module."""
 
     def setup(self):
         self.mock_g = Mock(spec_set=GitHub)
