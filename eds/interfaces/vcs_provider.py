@@ -14,7 +14,7 @@ class VcsProvider(Plugin):
         "title": "VCS Provider",
         "type": "object",
         "properties": {
-            "token_env_var": "GITHUB_TOKEN",
+            "token_env_var": "",
             "github_enterprise_url": ""
         }
     }

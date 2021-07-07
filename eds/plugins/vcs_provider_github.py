@@ -31,16 +31,19 @@ class GithubProviderPlugin(BasePlugin, VcsProvider):
         self.validate()
         self.overridden = False
 
+        token_env_var = self._yaml.get('token_env_var', 'GITHUB_TOKEN')
+        github_enterprise_url = self._yaml.get('github_enterprise_url', '')
+
         # Login to Github or Github Enterprise.
-        token: str = os.environ.get(self._yaml['token_env_var'])
-        if token == '' or token is None:
+        token: str = os.environ.get(token_env_var)
+        if token is None or token == '':
             raise RuntimeError(
-                f"ERROR: You must export the {self._yaml['token_env_var']} environment variable."
+                f"ERROR: You must export the {token_env_var} environment variable."
             )
-        if self._yaml['github_enterprise_url'] == '' or self._yaml['github_enterprise_url'] is None:
+        if github_enterprise_url is None or github_enterprise_url == '':
             self._g: GitHub = login(token=token)
         else:
-            self._g: GitHubEnterprise = enterprise_login(url=self._yaml['github_enterprise_url'], token=token)
+            self._g: GitHubEnterprise = enterprise_login(url=github_enterprise_url, token=token)
 
     def parse_event(self) -> Dict:
         """Parse webhook event for project url and ref."""
