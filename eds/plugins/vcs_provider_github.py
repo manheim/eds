@@ -138,4 +138,3 @@ class GithubProvider(VcsProvider):
             return False
 
         return True
-
