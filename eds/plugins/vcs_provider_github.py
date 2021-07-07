@@ -38,7 +38,7 @@ class GithubProvider(VcsProvider):
             raise RuntimeError(
                 f'ERROR: You must export the {token_env_var} environment variable.'
             )
-        if github_enterprise_url is None:
+        if github_enterprise_url == '' or github_enterprise_url is None:
             self._g: GitHub = login(token=token)
         else:
             self._g: GitHubEnterprise = enterprise_login(url=github_enterprise_url, token=token)

@@ -13,7 +13,10 @@ class VcsProvider(Plugin):
         "$id": "eds.vcs_provider",
         "title": "VCS Provider",
         "type": "object",
-        "properties": {}
+        "properties": {
+            "token_env_var": "GITHUB_TOKEN",
+            "github_enterprise_url": ""
+        }
     }
 
     @abstractmethod
