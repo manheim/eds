@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from eds.interfaces.plugin import Plugin
 
 
@@ -14,6 +15,7 @@ class Worker(Plugin):
         "properties": {}
     }
 
+    @abstractmethod
     def build_eds(self, eds_version: bool, plugin_versions: bool) -> None:
         """Build EDS.
 

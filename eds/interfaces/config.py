@@ -1,4 +1,4 @@
-
+from abc import abstractmethod
 from eds.interfaces.plugin import Plugin
 
 
@@ -15,6 +15,7 @@ class Config(Plugin):
         "properties": {}
     }
 
+    @abstractmethod
     def generate(self) -> None:
         """Generate the config."""
         raise NotImplementedError()

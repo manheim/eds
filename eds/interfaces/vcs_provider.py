@@ -1,5 +1,5 @@
 from typing import Dict
-
+from abc import abstractmethod
 from eds.interfaces.plugin import Plugin
 
 
@@ -16,22 +16,27 @@ class VcsProvider(Plugin):
         "properties": {}
     }
 
+    @abstractmethod
     def parse_event(self) -> Dict:
         """Parse webhook event for project url and ref."""
         raise NotImplementedError()
 
+    @abstractmethod
     def get_files(self) -> Dict:
         """Get project files."""
         raise NotImplementedError()
 
+    @abstractmethod
     def create_project(self) -> None:
         """Create a Project."""
         raise NotImplementedError()
 
+    @abstractmethod
     def delete_project(self) -> None:
         """Delete a Project."""
         raise NotImplementedError()
 
+    @abstractmethod
     def update_project(self) -> None:
         """Update a Project."""
         raise NotImplementedError()
