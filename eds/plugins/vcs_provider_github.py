@@ -20,7 +20,7 @@ class GithubProviderPlugin(BasePlugin, VcsProvider):
     """eds.plugins.vcs_provider_github Plugin."""
 
     def __init__(self, yaml: Dict):
-        """GithubProvider Consructor.
+        """Github Provider Plugin Consructor.
 
         Args:
             yaml (Dict): Plugin yaml dict.
