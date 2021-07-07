@@ -1,5 +1,5 @@
 import os
-from typing import List, Dict, Optional
+from typing import Dict, Optional
 
 from github3 import login, enterprise_login
 from github3.github import GitHub, GitHubEnterprise
@@ -14,7 +14,6 @@ from github3.repos.contents import Contents
 
 from eds.plugin import BasePlugin
 from eds.interfaces.vcs_provider import VcsProvider
-from eds.interfaces.plugin import Plugin
 
 
 class GithubProviderPlugin(BasePlugin, VcsProvider):
@@ -47,7 +46,6 @@ class GithubProviderPlugin(BasePlugin, VcsProvider):
 
     def parse_event(self) -> Dict:
         """Parse webhook event for project url and ref."""
-
         # parse project url and sha from the webhook payload.
         return {}
 
