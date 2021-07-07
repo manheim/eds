@@ -31,21 +31,11 @@ class GithubProvider(VcsProvider):
         else:
             self._g: GitHubEnterprise = enterprise_login(url=github_enterprise_url, token=token)
 
-    @property
-    def children(self) -> List[Plugin]:
-        """The list of child plugins.
-
-        Returns:
-            List[Plugin]: The list of child plugins.
-        """
-        return []
-
-    def validate(self) -> None:
-        """Validate the plugin."""
-        return super().validate()
 
     def parse_event(self) -> Dict:
         """Parse webhook event for project url and ref."""
+
+        # parse project url and sha from the webhook payload.
         return super().parse_event()
 
     def get_files(self, owner: str, repo_name: str, path: str = '/', ref: str = 'master') -> Dict[str, Contents]:
