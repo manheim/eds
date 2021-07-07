@@ -17,9 +17,21 @@ from eds.interfaces.plugin import Plugin
 
 
 class GithubProvider(VcsProvider):
-    """Github Provider implementation."""
+    """eds.plugins.vcs_provider_github Plugin."""
 
-    def __init__(self, token_env_var: str = None, github_enterprise_url: str = None):
+    def __init__(self, yaml: Dict):
+        """GithubProvider Consructor.
+
+        Args:
+            yaml (Dict): Plugin yaml dict.
+        """
+        self._yaml = yaml
+        self._validate_schema()
+        self.validate()
+        self.overridden = False
+        self.gh_login(self._yaml['token_env_var'], self._yaml['github_enterprise_url'])
+
+    def gh_login(self, token_env_var: str = None, github_enterprise_url: str = None):
         """Login to Github or Github Enterprise."""
         token: str = os.environ.get(token_env_var)
         if token == '' or token is None:
@@ -30,7 +42,6 @@ class GithubProvider(VcsProvider):
             self._g: GitHub = login(token=token)
         else:
             self._g: GitHubEnterprise = enterprise_login(url=github_enterprise_url, token=token)
-
 
     def parse_event(self) -> Dict:
         """Parse webhook event for project url and ref."""
