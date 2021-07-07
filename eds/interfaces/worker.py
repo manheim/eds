@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from eds.interfaces.plugin import Plugin
 
 
@@ -14,6 +15,7 @@ class Worker(Plugin):
         "properties": {}
     }
 
+    @abstractmethod
     def build_eds(self, eds_version: bool, plugin_versions: bool) -> None:
         """Build EDS.
 
@@ -21,4 +23,4 @@ class Worker(Plugin):
             eds_version (bool): EDS version as pip install requirement.
             plugin_versions (bool): List of EDS plugin versions as pip install requirements.
         """
-        pass
+        raise NotImplementedError()

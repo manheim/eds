@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from eds.interfaces.plugin import Plugin
 
 
@@ -14,6 +15,7 @@ class Pipeline(Plugin):
         "properties": {}
     }
 
+    @abstractmethod
     def build(self) -> None:
         """Build the pipeline configuration."""
-        pass
+        raise NotImplementedError()
