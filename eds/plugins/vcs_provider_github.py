@@ -1,4 +1,5 @@
 import os
+import json
 from typing import Dict, Optional
 
 from github3 import login, enterprise_login
@@ -44,10 +45,13 @@ class GithubProviderPlugin(BasePlugin, VcsProvider):
         else:
             self._g: GitHubEnterprise = enterprise_login(url=github_enterprise_url, token=token)
 
-    def parse_event(self) -> Dict:
+    def parse_event(self, payload) -> Dict:
         """Parse webhook event for project url and ref."""
         # parse project url and sha from the webhook payload.
-        return {}
+        json_data = json.loads(payload)
+        project_url = json_data['repository']['url']
+        head_sha = json_data['check_suite']['head_sha']
+        return {"url": project_url, "ref": head_sha}
 
     def get_files(self, owner: str, repo_name: str, path: str = '/', ref: str = 'master') -> Dict[str, Contents]:
         """Get project files.
