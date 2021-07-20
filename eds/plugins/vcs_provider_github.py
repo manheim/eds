@@ -45,7 +45,7 @@ class GithubProviderPlugin(BasePlugin, VcsProvider):
         else:
             self._g: GitHubEnterprise = enterprise_login(url=github_enterprise_url, token=token)
 
-    def parse_event(self, payload) -> Dict:
+    def parse_event(self, payload: str) -> Dict:
         """Parse webhook event for project url and ref."""
         # parse project url and sha from the webhook payload.
         json_data = json.loads(payload)
