@@ -20,6 +20,17 @@ from eds.interfaces.vcs_provider import VcsProvider
 class GithubProviderPlugin(BasePlugin, VcsProvider):
     """eds.plugins.vcs_provider_github Plugin."""
 
+    schema = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "eds.plugins.vcs_provider_github",
+        "title": "Github Provider Plugin",
+        "type": "object",
+        "properties": {
+            "token_env_var": "",
+            "github_enterprise_url": ""
+        }
+    }
+
     def __init__(self, yaml: Dict):
         """Github Provider Plugin Consructor.
 
