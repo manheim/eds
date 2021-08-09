@@ -3,14 +3,14 @@ on: [push]
 jobs:
   build:
     strategy:
-    matrix:
-      include:
-        - python-version: 3.7
-          tox: py37
-        - python-version: 3.8
-          tox: py38
-        - python-version: 3.9
-          tox: py39
+      matrix:
+        include:
+          - python-version: 3.7
+            tox: py37
+          - python-version: 3.8
+            tox: py38
+          - python-version: 3.9
+            tox: py39
     steps:
       - uses: actions/checkout@v2
 
