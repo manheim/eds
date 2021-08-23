@@ -20,8 +20,12 @@ class Event():
             project_name (str): Project name.
             project_version (str): Project version.
         """
+        # todo:
+        #   these *_built values need to be determined by the worker
+        #   will be implemented in a forthcoming BaseWorker class.
         self._eds_built = eds_built
         self._eds_plugins_built = eds_plugins_built
+
         self._url = url
         self._project_name = project_name
         self._project_version = project_version

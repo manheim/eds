@@ -10,6 +10,19 @@ class SomePlugin(BasePlugin):
     pass
 
 
+eds_yml_missing_version = {
+    'include': [],
+    'plugins': [
+        {
+            'id': 'yo',
+            'name': 'Foo',
+            'type': 'Bar',
+            'properties': {
+            }
+        }
+    ]
+}
+
 eds_yml_grandparent = {
     'include': [],
     'plugins': [
@@ -86,6 +99,7 @@ eds_yml_child = {
 def _setup(monkeypatch):
     monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
     monkeypatch.setattr(project, 'get_plugin', lambda group, name: SomePlugin)
+    monkeypatch.setattr(project, 'is_installed', lambda req: True)
     event = Event(True, True, '/child', 'project', 'project==1.0')
     return Project(event)
 
@@ -152,3 +166,32 @@ def test_duplicate_include():
     event = Event(True, True, '/child', 'project', 'project==1.0')
     with pytest.raises(DuplicateIncludeError):
         return Project(event, {'/child': ''})
+
+
+def test_plugin_installed(monkeypatch):
+    monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
+    monkeypatch.setattr(project, 'get_plugin', lambda group, name: SomePlugin)
+    monkeypatch.setattr(project, 'is_installed', lambda req: True)
+    event = Event(True, True, '/grandparent', 'project', 'project==1.0')
+    p = Project(event)
+    for plugin in p.plugins:
+        assert type(plugin).__name__ == 'SomePlugin'
+
+def test_plugin_not_installed(monkeypatch):
+    monkeypatch.setattr(Event, '_get_eds_yaml', _get_eds_yaml)
+    monkeypatch.setattr(project, 'get_plugin', lambda group, name: SomePlugin)
+    monkeypatch.setattr(project, 'is_installed', lambda req: False)
+    event = Event(True, True, '/grandparent', 'project', 'project==1.0')
+    p = Project(event)
+    for plugin in p.plugins:
+        assert type(plugin).__name__ == 'BasePlugin'
+
+
+def test_plugin_missing_version(monkeypatch):
+    monkeypatch.setattr(Event, '_get_eds_yaml', lambda self: eds_yml_missing_version)
+    monkeypatch.setattr(project, 'get_plugin', lambda group, name: SomePlugin)
+    event = Event(True, True, '/missing', 'project', 'project==1.0')
+    p = Project(event)
+    for plugin in p.plugins:
+        assert type(plugin).__name__ == 'SomePlugin'
+
