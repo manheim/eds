@@ -1,5 +1,5 @@
 name: Run Tox
-on: [push]
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
