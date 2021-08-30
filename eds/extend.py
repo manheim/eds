@@ -121,3 +121,16 @@ def get_plugins(group: str, project: str = None) -> Dict:
         Dict: Dict of plugins.
     """
     return _get_plugins(group, project=project)
+
+
+def is_installed(pip_install_requirement: str) -> bool:
+    """Whether a pip install requirement is installed.
+
+    Args:
+        pip_install_requirement (str): pip install requirement.
+
+    Returns:
+        bool: Whether a pip install requirement is installed.
+    """
+    # todo: implement using https://github.com/pypa/pip/blob/main/src/pip/_internal/req/req_install.py#L392
+    raise NotImplementedError()

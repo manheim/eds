@@ -26,7 +26,7 @@ The format of `eds.yml`:
 
 ```yaml
 version:
-includes:
+include:
 plugins:
     - id:
       name:
