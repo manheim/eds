@@ -1,5 +1,7 @@
 
 from __future__ import annotations
+from pip._internal.req import InstallRequirement
+from pip._vendor.packaging.requirements import Requirement
 import pkg_resources
 from typing import Dict, Iterator
 
@@ -132,5 +134,7 @@ def is_installed(pip_install_requirement: str) -> bool:
     Returns:
         bool: Whether a pip install requirement is installed.
     """
-    # todo: implement using https://github.com/pypa/pip/blob/main/src/pip/_internal/req/req_install.py#L392
-    raise NotImplementedError()
+    req = Requirement(pip_install_requirement)
+    install_req = InstallRequirement(req, None)
+    install_req.check_if_exists(use_user_site=False)
+    return install_req.satisfied_by is not None

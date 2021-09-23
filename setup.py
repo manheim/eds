@@ -29,6 +29,7 @@ setup(
     install_requires=[
         'click',
         'setuptools',
+        'pip'
     ],
     entry_points={
         'console_scripts': [
