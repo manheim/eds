@@ -2,7 +2,7 @@
 import pkg_resources
 import pytest
 
-from eds.extend import _get_plugins, get_plugins, get_plugin
+from eds.extend import _get_plugins, get_plugins, get_plugin, is_installed
 from eds.exception import (PluginNameNotFoundError, NoPluginsFoundError,
                            DuplicatePluginError, PluginNameMismatchError,
                            PluginNoNameAttributeError, PluginInterfaceNotImplementedError,
@@ -109,3 +109,10 @@ def test__get_plugins_interface_not_implemented(monkeypatch):
     patch_working_set(monkeypatch, 'PipelinePlugin')
     with pytest.raises(PluginInterfaceNotImplementedError):
         _get_plugins('eds.config')
+
+def test_is_installed_satisfied():
+    assert is_installed('eds')
+
+def test_is_installed_not_satisfied():
+    assert not is_installed('no_eds_is_installed')
+
